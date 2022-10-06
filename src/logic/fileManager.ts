@@ -1,5 +1,6 @@
-const fs = window.require('fs');
-const path = '%LOCALAPPDATA%\\osu!\\Songs';
+import fs from 'fs';
+
+const path = `${process.env.LOCALAPPDATA}\\osu!\\Songs`;
 
 /**
  * Returns the local mapset IDs
@@ -7,9 +8,10 @@ const path = '%LOCALAPPDATA%\\osu!\\Songs';
 function getLocalMapsetIDs(): number[] {
   const maps = fs.readdirSync(path);
   const mapIDs: number[] = [];
+
   maps.forEach((item: string) => {
     const id = item.split(' ')[0];
-    if (Number.isInteger(id)) {
+    if (!Number.isNaN(id)) {
       mapIDs.push(parseInt(id, 10));
     }
   });

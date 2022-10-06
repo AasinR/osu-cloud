@@ -6,7 +6,11 @@ function HomePage() {
 
   return (
     <div className="page">
-      <div className="map-list">map list</div>
+      <div className="map-list">
+        {localMapIDs.map((item) => {
+          return <p key={item}>{item}</p>;
+        })}
+      </div>
     </div>
   );
 }

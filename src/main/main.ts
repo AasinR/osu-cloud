@@ -75,9 +75,11 @@ const createWindow = async () => {
     height: 728,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      preload: app.isPackaged
+      nodeIntegration: true,
+      contextIsolation: false,
+      /* preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+        : path.join(__dirname, '../../.erb/dll/preload.js'), */
     },
   });
 
