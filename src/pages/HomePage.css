@@ -1,0 +1,40 @@
+:root {
+  --filter-height: 60px;
+}
+
+.map-filter {
+  width: 100%;
+  height: var(--filter-height);
+
+  border-style: solid;
+  border-color: blue;
+}
+
+.map-area {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - var(--filter-height));
+
+  border-style: solid;
+  border-color: green;
+}
+
+.map-info {
+  width: 50%;
+  height: 100%;
+  float: left;
+
+  border-style: solid;
+  border-color: yellow;
+}
+
+.map-list {
+  width: 50%;
+  height: 100%;
+  float: right;
+
+  overflow: auto;
+
+  border-style: solid;
+  border-color: red;
+}

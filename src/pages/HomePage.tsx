@@ -6,10 +6,15 @@ function HomePage() {
 
   return (
     <div className="page">
-      <div className="map-list">
-        {localMapIDs.map((item) => {
-          return <p key={item}>{item}</p>;
-        })}
+      <div className="map-filter">Menu</div>
+      <div className="map-area">
+        <div className="map-info">Map Info</div>
+        <div className="map-list">
+          Map List
+          {localMapIDs.map((item) => {
+            return <p key={item}>{item}</p>;
+          })}
+        </div>
       </div>
     </div>
   );
