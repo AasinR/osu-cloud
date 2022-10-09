@@ -1,5 +1,5 @@
 import { useLocalMapsetIDList } from '../hooks';
-import { ErrorPage } from '.';
+import ErrorPage from './ErrorPage';
 import './HomePage.css';
 
 function HomePage() {
