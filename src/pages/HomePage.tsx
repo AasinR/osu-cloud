@@ -1,23 +1,27 @@
-import { fileManager } from '../logic';
+import { useLocalMapsetIDList } from '../hooks';
+import { ErrorPage } from '.';
 import './HomePage.css';
 
 function HomePage() {
-  const localMapIDs = fileManager.getLocalMapsetIDs();
+  const { localIDList, validData } = useLocalMapsetIDList();
 
-  return (
-    <div className="page">
-      <div className="map-filter">Menu</div>
-      <div className="map-area">
-        <div className="map-info">Map Info</div>
-        <div className="map-list">
-          Map List
-          {localMapIDs.map((item) => {
-            return <p key={item}>{item}</p>;
-          })}
+  if (validData) {
+    return (
+      <div className="page">
+        <div className="map-filter">Menu</div>
+        <div className="map-area">
+          <div className="map-info">Map Info</div>
+          <div className="map-list">
+            Map List
+            {localIDList.map((item) => {
+              return <p key={item}>{item}</p>;
+            })}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+  return <ErrorPage />;
 }
 
 export default HomePage;
