@@ -1,5 +1,5 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import { HomePage, ErrorPage } from '../pages';
+import { HomePage, ErrorPage } from 'pages';
 import './App.css';
 
 export default function App() {
