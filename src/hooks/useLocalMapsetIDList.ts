@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import fs from 'fs';
-import { fileHandler } from '../logic';
 
 /**
  * Fetch mapset IDs from the device.
@@ -9,14 +7,13 @@ function useLocalMapsetIDList() {
   const [localIDList, setLocalIDList] = useState<number[]>([]);
   const [validData, setValidData] = useState<boolean>(false);
 
-  const path = `${process.env.LOCALAPPDATA}\\osu!\\Songs`;
-
   useEffect(() => {
-    if (fs.existsSync(path)) {
-      setValidData(true);
-      setLocalIDList(fileHandler.getLocalMapsetIDList(path));
-    }
-  }, [path]);
+    (async () => {
+      const result = await window.electron.localMapsetIDList();
+      setLocalIDList(result.localIDList);
+      setValidData(result.validData);
+    })();
+  }, []);
 
   return { localIDList, validData };
 }

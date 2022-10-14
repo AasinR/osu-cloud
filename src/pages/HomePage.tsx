@@ -3,9 +3,9 @@ import ErrorPage from './ErrorPage';
 import './HomePage.css';
 
 function HomePage() {
-  // const { localIDList, validData } = useLocalMapsetIDList();
+  const { localIDList, validData } = useLocalMapsetIDList();
 
-  if (true) {
+  if (validData) {
     return (
       <div className="page">
         <div className="map-filter">Menu</div>
@@ -13,7 +13,7 @@ function HomePage() {
           <div className="map-info">Map Info</div>
           <div className="map-list">
             Map List
-            {[].map((item) => {
+            {localIDList.map((item) => {
               return <p key={item}>{item}</p>;
             })}
           </div>

@@ -15,6 +15,7 @@ import log from 'electron-log';
 import dotenv from 'dotenv';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import eventHandler from './handlers/eventHandler';
 
 dotenv.config();
 
@@ -124,6 +125,7 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    ipcMain.handle('local-mapset-list', eventHandler.localMapsetIDList);
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
