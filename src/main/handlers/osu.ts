@@ -1,8 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+
 /**
  * Requests a client credential token from the osu!api.
  */
-async function getAccessToken() {
+async function getAccessToken(): Promise<{
+  token_type: string;
+  expires_in: number;
+  access_token: string;
+}> {
   const url = 'https://osu.ppy.sh/oauth/token';
   const data = {
     client_id: process.env.OSU_CLIENT_ID,
@@ -17,15 +22,13 @@ async function getAccessToken() {
   const token = await axios
     .post(url, data, { headers })
     .then((response: AxiosResponse) => {
-      console.log(response.data);
       return response.data;
     })
     .catch((error: AxiosError) => {
-      console.log(error);
       throw error;
     });
 
-  return token.data;
+  return token;
 }
 
 const osu = {

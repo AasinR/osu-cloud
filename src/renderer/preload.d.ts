@@ -5,6 +5,10 @@ declare global {
         validData: boolean;
         localIDList: number[];
       }>;
+      getAccessToken: () => Promise<{
+        accessToken: string;
+        expirationDate: Date;
+      }>;
     };
   }
 }
