@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 
 function useFetchToken() {
-  const [token, setToken] = useState<string>('hello, im not a token');
+  const [token, setToken] = useState<string>('');
   const [expirationDate, setExpirationDate] = useState<Date>(new Date());
-  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const requestToken = async () => {
-    console.log('request runs');
+  const requestToken = async (): Promise<string> => {
     try {
       const result = await window.electron.getAccessToken();
       setToken(result.accessToken);
       setExpirationDate(result.expirationDate);
+      return result.accessToken;
     } catch (error) {
-      setIsValid(false);
+      return ''; // invalid token string
     }
   };
 
@@ -23,15 +22,13 @@ function useFetchToken() {
   const accessToken = async () => {
     const currentTime: Date = new Date();
     if (currentTime < expirationDate) {
-      console.log('Time is okay');
       return token;
     }
-    await requestToken();
-    console.log('Time not good');
-    return token;
+    const newToken: string = await requestToken();
+    return newToken;
   };
 
-  return { isValid, accessToken };
+  return { accessToken };
 }
 
 export default useFetchToken;

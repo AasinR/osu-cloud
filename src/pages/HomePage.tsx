@@ -1,9 +1,12 @@
-import { useLocalMapsetIDList } from '../hooks';
+import { useContext } from 'react';
+import { TokenContext } from 'utils/contexts';
+import { useLocalMapsetIDList } from 'hooks';
 import ErrorPage from './ErrorPage';
 import './HomePage.css';
 
 function HomePage() {
   const { localIDList, validData } = useLocalMapsetIDList();
+  const accessToken = useContext(TokenContext);
 
   if (validData) {
     return (
