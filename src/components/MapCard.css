@@ -1,0 +1,17 @@
+.map-card {
+  display: flex;
+  height: 100px;
+  overflow: hidden;
+
+  border-style: solid;
+  border-color: pink;
+}
+
+.map-card-cover {
+  height: 100%;
+}
+
+.map-card-title {
+  font-weight: bold;
+  font-size: 1.5em;
+}
