@@ -11,12 +11,12 @@ function localMapsetIDList(event: Electron.IpcMainInvokeEvent): {
   localIDList: number[];
 } {
   const path = `${process.env.LOCALAPPDATA}\\osu!\\Songs`;
-  let localIDList: number[] = [];
+  const localIDList: number[] = [];
   let validData = false;
 
   if (fs.existsSync(path)) {
     validData = true;
-    localIDList = fileHandler.getLocalMapsetIDList(path);
+    const test = fileHandler.getLocalMapsetIDList(path);
   }
 
   return { validData, localIDList };
