@@ -4,22 +4,16 @@ import fileHandler from './fileHandler';
 import osu from './osu';
 
 /**
- * Checks if the folder exists and returns the local mapset ID array.
+ * Returns local mapset meta data array.
  */
-function localMapsetIDList(event: Electron.IpcMainInvokeEvent): {
-  validData: boolean;
-  localIDList: number[];
-} {
+function localDataList(
+  event: Electron.IpcMainInvokeEvent
+): { id: number; metaData: { [key: string]: string } }[] {
   const path = `${process.env.LOCALAPPDATA}\\osu!\\Songs`;
-  const localIDList: number[] = [];
-  let validData = false;
+  const localData: { id: number; metaData: { [key: string]: string } }[] =
+    fileHandler.getLocalDataList(path);
 
-  if (fs.existsSync(path)) {
-    validData = true;
-    const test = fileHandler.getLocalMapsetIDList(path);
-  }
-
-  return { validData, localIDList };
+  return localData;
 }
 
 /**
@@ -38,7 +32,7 @@ async function getAccessToken(event: Electron.IpcMainInvokeEvent): Promise<{
 }
 
 const eventHandler = {
-  localMapsetIDList,
+  localDataList,
   getAccessToken,
 };
 

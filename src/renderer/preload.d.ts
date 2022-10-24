@@ -1,10 +1,9 @@
 declare global {
   interface Window {
     electron: {
-      localMapsetIDList: () => Promise<{
-        validData: boolean;
-        localIDList: number[];
-      }>;
+      localDataList: () => Promise<
+        { id: number; metaData: { [key: string]: string } }[]
+      >;
       getAccessToken: () => Promise<{
         accessToken: string;
         expirationDate: Date;

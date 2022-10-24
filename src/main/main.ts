@@ -125,7 +125,7 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    ipcMain.handle('local-mapset-list', eventHandler.localMapsetIDList);
+    ipcMain.handle('local-mapset-list', eventHandler.localDataList);
     ipcMain.handle('osu-access-token', eventHandler.getAccessToken);
     createWindow();
     app.on('activate', () => {
