@@ -14,14 +14,17 @@ function HomePage() {
       <div className="map-area">
         <div className="map-info">Map Info</div>
         <div className="map-list">
-          Map List
           {localData.map((item) => {
             return (
               <MapCard
                 key={item.id}
-                id={item.id}
+                mapsetID={item.id}
                 title={item.metaData.Title}
-                author={item.metaData.Artist}
+                artist={item.metaData.Artist}
+                creator={item.metaData.Creator}
+                onClick={(data: number) => {
+                  console.log(data);
+                }}
               />
             );
           })}

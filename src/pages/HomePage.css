@@ -38,3 +38,16 @@
   border-style: solid;
   border-color: red;
 }
+
+.map-list::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.map-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.map-list::-webkit-scrollbar-thumb {
+  background-color: #666666;
+}

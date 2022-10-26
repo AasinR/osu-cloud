@@ -1,14 +1,34 @@
 .map-card {
+  --card-height: 110px;
+
   display: flex;
-  height: 100px;
+  height: var(--card-height);
+  margin: 10px 0;
   overflow: hidden;
 
+  background-color: #ff66aa60;
   border-style: solid;
-  border-color: pink;
+  border-color: #ffc0cb;
+  border-radius: 10px 0 0 10px;
+}
+
+.map-card:hover {
+  background-color: #ff66aa90;
+}
+
+.map-card:focus {
+  background-color: #ff66aa99;
+  outline: none;
 }
 
 .map-card-cover {
-  height: 100%;
+  height: var(--card-height);
+  width: var(--card-height);
+}
+
+.map-card-data {
+  margin-left: 10px;
+  white-space: nowrap;
 }
 
 .map-card-title {
