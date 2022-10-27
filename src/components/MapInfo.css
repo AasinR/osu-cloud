@@ -1,0 +1,17 @@
+.map-info-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  border-style: solid;
+  border-color: purple;
+}
+
+.map-info-cover {
+  width: 100%;
+}
+
+.map-info-title {
+  font-weight: bold;
+  font-size: 1.8em;
+}
