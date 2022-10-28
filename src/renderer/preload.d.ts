@@ -8,6 +8,10 @@ declare global {
         accessToken: string;
         expirationDate: Date;
       }>;
+      deviceData: () => Promise<{
+        name: string;
+        uuid: string;
+      }>;
     };
   }
 }

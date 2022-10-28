@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import fs from 'fs';
+import si from 'systeminformation';
+import os from 'os';
 import fileHandler from './fileHandler';
 import osu from './osu';
 
@@ -31,9 +32,22 @@ async function getAccessToken(event: Electron.IpcMainInvokeEvent): Promise<{
   return { accessToken, expirationDate };
 }
 
+/**
+ * Get device name and unique hardware UUID
+ */
+async function deviceData(event: Electron.IpcMainInvokeEvent): Promise<{
+  name: string;
+  uuid: string;
+}> {
+  const name: string = os.hostname();
+  const uuid: string = (await si.uuid()).hardware;
+  return { name, uuid };
+}
+
 const eventHandler = {
   localDataList,
   getAccessToken,
+  deviceData,
 };
 
 export default eventHandler;

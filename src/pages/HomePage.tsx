@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocalDataList } from 'hooks';
 import { MapCard, MapInfo } from 'components';
 import './HomePage.css';
@@ -8,7 +8,15 @@ function HomePage() {
     id: number;
     metaData: { [key: string]: string };
   } | null>(null);
+  const [device, setDevice] = useState<{ name: string; uuid: string }>();
   const { localData } = useLocalDataList();
+
+  useEffect(() => {
+    (async () => {
+      setDevice(await window.electron.deviceData());
+      console.log(await window.electron.deviceData());
+    })();
+  }, []);
 
   return (
     <div className="page">
