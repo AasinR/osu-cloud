@@ -128,6 +128,8 @@ app
     ipcMain.handle('local-mapset-list', eventHandler.localDataList);
     ipcMain.handle('osu-access-token', eventHandler.getAccessToken);
     ipcMain.handle('device-data', eventHandler.deviceData);
+    ipcMain.handle('load-save-file', eventHandler.loadSaveFile);
+    ipcMain.handle('write-save-file', eventHandler.writeSaveFile);
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

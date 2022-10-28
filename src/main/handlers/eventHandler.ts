@@ -10,9 +10,8 @@ import osu from './osu';
 function localDataList(
   event: Electron.IpcMainInvokeEvent
 ): { id: number; metaData: { [key: string]: string } }[] {
-  const path = `${process.env.LOCALAPPDATA}\\osu!\\Songs`;
   const localData: { id: number; metaData: { [key: string]: string } }[] =
-    fileHandler.getLocalDataList(path);
+    fileHandler.getLocalDataList();
 
   return localData;
 }
@@ -44,10 +43,23 @@ async function deviceData(event: Electron.IpcMainInvokeEvent): Promise<{
   return { name, uuid };
 }
 
+async function loadSaveFile(
+  event: Electron.IpcMainInvokeEvent
+): Promise<SaveFile> {
+  const data = await fileHandler.loadSaveFile();
+  return data;
+}
+
+function writeSaveFile(event: Electron.IpcMainInvokeEvent, data: SaveFile) {
+  fileHandler.writeSaveFile(data);
+}
+
 const eventHandler = {
   localDataList,
   getAccessToken,
   deviceData,
+  loadSaveFile,
+  writeSaveFile,
 };
 
 export default eventHandler;

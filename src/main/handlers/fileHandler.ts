@@ -1,14 +1,20 @@
 import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import si from 'systeminformation';
+
+const OsuPath = `${process.env.LOCALAPPDATA}\\osu!\\Songs`;
+const SaveFilePath = `${path.resolve('./')}\\data`;
 
 /**
- * Get mapset meta data inside given directory
+ * Get mapset metadata inside given directory
  */
-function readMetaData(path: string) {
+function readMetaData(dirPath: string) {
   const fileName: string = fs
-    .readdirSync(path)
+    .readdirSync(dirPath)
     .filter((item) => item.match(/.osu$/))[0];
 
-  const file: string = fs.readFileSync(`${path}\\${fileName}`).toString();
+  const file: string = fs.readFileSync(`${dirPath}\\${fileName}`).toString();
   const content: string = file.substring(
     file.indexOf('[Metadata]'),
     file.indexOf('[Difficulty]')
@@ -29,10 +35,11 @@ function readMetaData(path: string) {
 /**
  * Returns an array of local mapset IDs and metadata.
  */
-function getLocalDataList(
-  path: string
-): { id: number; metaData: { [key: string]: string } }[] {
-  const dirNames: string[] = fs.readdirSync(path);
+function getLocalDataList(): {
+  id: number;
+  metaData: { [key: string]: string };
+}[] {
+  const dirNames: string[] = fs.readdirSync(OsuPath);
   const mapsetList: { id: number; metaData: { [key: string]: string } }[] = [];
 
   dirNames.forEach((item: string) => {
@@ -40,7 +47,7 @@ function getLocalDataList(
     if (!Number.isNaN(id)) {
       mapsetList.push({
         id: parseInt(id, 10),
-        metaData: readMetaData(`${path}\\${item}`),
+        metaData: readMetaData(`${OsuPath}\\${item}`),
       });
     }
   });
@@ -48,8 +55,47 @@ function getLocalDataList(
   return [...new Map(mapsetList.map((item) => [item.id, item])).values()];
 }
 
+/**
+ * Writes given data to save file, else creates a new save.
+ */
+async function writeSaveFile(data?: SaveFile) {
+  let saveString: string;
+  if (data === undefined) {
+    const device = { name: os.hostname(), uuid: (await si.uuid()).hardware };
+    const mapsets = getLocalDataList();
+    const beatmaps: SaveFile['beatmaps'] = [];
+    mapsets.forEach((map) => {
+      beatmaps.push({
+        id: map.id,
+        metadata: map.metaData,
+        downloaded: [device.uuid],
+      });
+    });
+    const newSave: SaveFile = {
+      devices: [device],
+      beatmaps,
+    };
+    saveString = JSON.stringify(newSave);
+  } else saveString = JSON.stringify(data);
+  fs.writeFile(SaveFilePath, saveString, (error) => {
+    if (error) throw error;
+  });
+}
+
+/**
+ * Returns the save file in JSON format.
+ */
+async function loadSaveFile(): Promise<SaveFile> {
+  if (!fs.existsSync(SaveFilePath)) await writeSaveFile();
+  const saveFile: string = fs.readFileSync(SaveFilePath).toString();
+  const data: SaveFile = JSON.parse(saveFile);
+  return data;
+}
+
 const fileHandler = {
   getLocalDataList,
+  loadSaveFile,
+  writeSaveFile,
 };
 
 export default fileHandler;
