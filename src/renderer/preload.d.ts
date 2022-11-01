@@ -1,29 +1,36 @@
 declare global {
   interface Window {
     electron: {
-      localDataList: () => Promise<
-        { id: number; metaData: { [key: string]: string } }[]
-      >;
+      localDataList: () => Promise<LocalBeatmap[]>;
       getAccessToken: () => Promise<{
         accessToken: string;
         expirationDate: Date;
       }>;
-      deviceData: () => Promise<{
-        name: string;
-        uuid: string;
-      }>;
+      deviceData: () => Promise<Device>;
       loadSaveFile: () => Promise<SaveFile>;
       writeSaveFile: (data: SaveFile) => void;
     };
   }
 
+  interface BeatMap {
+    id: number;
+    metadata: { [key: string]: string };
+    downloaded: string[];
+  }
+
+  interface LocalBeatmap {
+    id: number;
+    metadata: { [key: string]: string };
+  }
+
+  interface Device {
+    name: string;
+    uuid: string;
+  }
+
   interface SaveFile {
-    devices: { name: string; uuid: string }[];
-    beatmaps: {
-      id: number;
-      metadata: { [key: string]: string };
-      downloaded: string[];
-    }[];
+    devices: Device[];
+    beatmaps: BeatMap[];
   }
 }
 

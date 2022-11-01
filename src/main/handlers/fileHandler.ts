@@ -3,8 +3,18 @@ import os from 'os';
 import path from 'path';
 import si from 'systeminformation';
 
+const DataPath = `${path.resolve('./')}\\data`;
+const SaveFilePath = `${DataPath}\\osu-save.json`;
 const OsuPath = `${process.env.LOCALAPPDATA}\\osu!\\Songs`;
-const SaveFilePath = `${path.resolve('./')}\\data`;
+
+/**
+ * Creates the 'data' directory.
+ */
+function createDataDir() {
+  if (!fs.existsSync(DataPath)) {
+    fs.mkdirSync(DataPath);
+  }
+}
 
 /**
  * Get mapset metadata inside given directory
@@ -35,19 +45,16 @@ function readMetaData(dirPath: string) {
 /**
  * Returns an array of local mapset IDs and metadata.
  */
-function getLocalDataList(): {
-  id: number;
-  metaData: { [key: string]: string };
-}[] {
+function getLocalDataList(): LocalBeatmap[] {
   const dirNames: string[] = fs.readdirSync(OsuPath);
-  const mapsetList: { id: number; metaData: { [key: string]: string } }[] = [];
+  const mapsetList: LocalBeatmap[] = [];
 
   dirNames.forEach((item: string) => {
     const id: string = item.split(' ')[0];
     if (!Number.isNaN(id)) {
       mapsetList.push({
         id: parseInt(id, 10),
-        metaData: readMetaData(`${OsuPath}\\${item}`),
+        metadata: readMetaData(`${OsuPath}\\${item}`),
       });
     }
   });
@@ -67,7 +74,7 @@ async function writeSaveFile(data?: SaveFile) {
     mapsets.forEach((map) => {
       beatmaps.push({
         id: map.id,
-        metadata: map.metaData,
+        metadata: map.metadata,
         downloaded: [device.uuid],
       });
     });
@@ -77,9 +84,7 @@ async function writeSaveFile(data?: SaveFile) {
     };
     saveString = JSON.stringify(newSave);
   } else saveString = JSON.stringify(data);
-  fs.writeFile(SaveFilePath, saveString, (error) => {
-    if (error) throw error;
-  });
+  fs.writeFileSync(SaveFilePath, saveString);
 }
 
 /**
@@ -94,6 +99,7 @@ async function loadSaveFile(): Promise<SaveFile> {
 
 const fileHandler = {
   getLocalDataList,
+  createDataDir,
   loadSaveFile,
   writeSaveFile,
 };

@@ -16,8 +16,11 @@ import dotenv from 'dotenv';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import eventHandler from './handlers/eventHandler';
+import fileHandler from './handlers/fileHandler';
 
+// before launch config
 dotenv.config();
+fileHandler.createDataDir();
 
 class AppUpdater {
   constructor() {

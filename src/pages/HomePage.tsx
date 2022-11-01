@@ -1,22 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useLocalDataList } from 'hooks';
+import { useState } from 'react';
+import { useSaveFile } from 'hooks';
 import { MapCard, MapInfo } from 'components';
 import './HomePage.css';
 
 function HomePage() {
-  const [activeMap, setActiveMap] = useState<{
-    id: number;
-    metaData: { [key: string]: string };
-  } | null>(null);
-  const [device, setDevice] = useState<{ name: string; uuid: string }>();
-  const { localData } = useLocalDataList();
-
-  useEffect(() => {
-    (async () => {
-      setDevice(await window.electron.deviceData());
-      console.log(await window.electron.deviceData());
-    })();
-  }, []);
+  const [activeMap, setActiveMap] = useState<BeatMap | null>(null);
+  const { saveFile } = useSaveFile();
 
   return (
     <div className="page">
@@ -26,20 +15,19 @@ function HomePage() {
           {activeMap ? <MapInfo map={activeMap} /> : ''}
         </div>
         <div className="map-list">
-          {localData.map((item) => {
+          {saveFile?.beatmaps.map((item) => {
             return (
               <MapCard
                 key={item.id}
                 mapsetID={item.id}
-                title={item.metaData.Title}
-                artist={item.metaData.Artist}
-                creator={item.metaData.Creator}
+                title={item.metadata.Title}
+                artist={item.metadata.Artist}
+                creator={item.metadata.Creator}
                 onClick={(mapsetID: number) => {
-                  const map = localData.find((obj) => {
+                  const map = saveFile.beatmaps.find((obj) => {
                     return obj.id === mapsetID;
                   });
                   if (map) setActiveMap(map);
-                  console.log(mapsetID);
                 }}
               />
             );
