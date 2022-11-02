@@ -61,3 +61,20 @@ export function addMaps(
 
   return beatmaps;
 }
+
+/**
+ * Updates the device name or adds new device.
+ */
+export function updateDeviceList(devices: Device[], current: Device): Device[] {
+  const updated: Device[] = devices;
+  let found = false;
+  for (let i = 0; i < devices.length; i += 1) {
+    if (devices[i].uuid === current.uuid) {
+      found = true;
+      updated[i].name = current.name;
+      break;
+    }
+  }
+  if (!found) updated.push(current);
+  return updated;
+}
