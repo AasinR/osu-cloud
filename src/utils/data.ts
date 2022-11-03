@@ -83,7 +83,7 @@ export function sortMaps(
   beatmaps: BeatMap[],
   type: 'Title' | 'Artist' | 'Creator',
   reverse = false
-) {
+): BeatMap[] {
   if (reverse) {
     beatmaps.sort((a: BeatMap, b: BeatMap) =>
       a.metadata[type].toLowerCase() > b.metadata[type].toLowerCase() ? -1 : 1
@@ -93,4 +93,5 @@ export function sortMaps(
       a.metadata[type].toLowerCase() > b.metadata[type].toLowerCase() ? 1 : -1
     );
   }
+  return beatmaps;
 }

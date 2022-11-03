@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSaveFile } from 'hooks';
 import { MapCard, MapInfo } from 'components';
+import { sortMaps } from 'utils/data';
 import './HomePage.css';
 
 function HomePage() {
-  const [activeMap, setActiveMap] = useState<BeatMap | null>(null);
   const { saveFile } = useSaveFile();
+  const [activeMap, setActiveMap] = useState<BeatMap | null>(null);
+  const [mapList, setMapList] = useState<BeatMap[]>([]);
+
+  useEffect(() => {
+    if (saveFile) {
+      setMapList(sortMaps([...saveFile.beatmaps], 'Title', false));
+    }
+  }, [saveFile]);
 
   return (
     <div className="page">
@@ -15,7 +23,7 @@ function HomePage() {
           {activeMap ? <MapInfo map={activeMap} /> : ''}
         </div>
         <div className="map-list">
-          {saveFile?.beatmaps.map((item) => {
+          {mapList.map((item) => {
             return (
               <MapCard
                 key={item.id}
@@ -24,7 +32,7 @@ function HomePage() {
                 artist={item.metadata.Artist}
                 creator={item.metadata.Creator}
                 onClick={(mapsetID: number) => {
-                  const map = saveFile.beatmaps.find((obj) => {
+                  const map = mapList.find((obj) => {
                     return obj.id === mapsetID;
                   });
                   if (map) setActiveMap(map);
