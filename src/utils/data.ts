@@ -78,3 +78,19 @@ export function updateDeviceList(devices: Device[], current: Device): Device[] {
   if (!found) updated.push(current);
   return updated;
 }
+
+export function sortMaps(
+  beatmaps: BeatMap[],
+  type: 'Title' | 'Artist' | 'Creator',
+  reverse = false
+) {
+  if (reverse) {
+    beatmaps.sort((a: BeatMap, b: BeatMap) =>
+      a.metadata[type].toLowerCase() > b.metadata[type].toLowerCase() ? -1 : 1
+    );
+  } else {
+    beatmaps.sort((a: BeatMap, b: BeatMap) =>
+      a.metadata[type].toLowerCase() > b.metadata[type].toLowerCase() ? 1 : -1
+    );
+  }
+}

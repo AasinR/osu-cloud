@@ -70,7 +70,7 @@ async function writeSaveFile(data?: SaveFile) {
   if (data === undefined) {
     const device = { name: os.hostname(), uuid: (await si.uuid()).hardware };
     const mapsets = getLocalDataList();
-    const beatmaps: SaveFile['beatmaps'] = [];
+    const beatmaps: BeatMap[] = [];
     mapsets.forEach((map) => {
       beatmaps.push({
         id: map.id,
@@ -78,6 +78,7 @@ async function writeSaveFile(data?: SaveFile) {
         downloaded: [device.uuid],
       });
     });
+    beatmaps.sort((a: BeatMap, b: BeatMap) => (a.id > b.id ? 1 : -1));
     const newSave: SaveFile = {
       devices: [device],
       beatmaps,
