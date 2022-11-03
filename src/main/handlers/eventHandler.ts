@@ -7,12 +7,8 @@ import osu from './osu';
 /**
  * Returns local mapset meta data array.
  */
-function localDataList(
-  event: Electron.IpcMainInvokeEvent
-): { id: number; metaData: { [key: string]: string } }[] {
-  const localData: { id: number; metaData: { [key: string]: string } }[] =
-    fileHandler.getLocalDataList();
-
+function localDataList(event: Electron.IpcMainInvokeEvent): LocalBeatmap[] {
+  const localData: LocalBeatmap[] = fileHandler.getLocalDataList();
   return localData;
 }
 
@@ -34,10 +30,7 @@ async function getAccessToken(event: Electron.IpcMainInvokeEvent): Promise<{
 /**
  * Get device name and unique hardware UUID
  */
-async function deviceData(event: Electron.IpcMainInvokeEvent): Promise<{
-  name: string;
-  uuid: string;
-}> {
+async function deviceData(event: Electron.IpcMainInvokeEvent): Promise<Device> {
   const name: string = os.hostname();
   const uuid: string = (await si.uuid()).hardware;
   return { name, uuid };
