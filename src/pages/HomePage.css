@@ -14,18 +14,12 @@
   position: absolute;
   width: 100%;
   height: calc(100% - var(--filter-height));
-
-  border-style: solid;
-  border-color: green;
 }
 
 .map-info {
   width: 50%;
   height: 100%;
   float: left;
-
-  border-style: solid;
-  border-color: yellow;
 }
 
 .map-list {

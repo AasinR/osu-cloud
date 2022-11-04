@@ -20,7 +20,9 @@ function MapCard({
   const image = `https://assets.ppy.sh/beatmaps/${mapsetID}/covers/list.jpg`;
   return (
     <div
-      className={`map-card ${downloaded ? 'downloaded' : 'not-downloaded'}`}
+      className={`map-card ${
+        downloaded ? 'map-card-downloaded' : 'map-card-not-downloaded'
+      }`}
       role="button"
       tabIndex={-1}
       onClick={() => {

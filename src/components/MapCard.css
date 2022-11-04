@@ -12,24 +12,24 @@
   border-radius: 10px 0 0 10px;
 }
 
-.downloaded {
+.map-card-downloaded {
   background-color: #ff66aa60;
 }
-.downloaded:hover {
+.map-card-downloaded:hover {
   background-color: #ff66aa90;
 }
-.downloaded:focus {
+.map-card-downloaded:focus {
   background-color: #ff66aa;
   outline: none;
 }
 
-.not-downloaded {
+.map-card-not-downloaded {
   background-color: #bb66ff60;
 }
-.not-downloaded:hover {
+.map-card-not-downloaded:hover {
   background-color: #bb66ff90;
 }
-.not-downloaded:focus {
+.map-card-not-downloaded:focus {
   background-color: #bb66ff;
   outline: none;
 }

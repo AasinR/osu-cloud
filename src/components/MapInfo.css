@@ -3,7 +3,9 @@
   height: auto;
   margin-top: 10px;
   overflow: hidden;
+  cursor: default;
 
+  background-color: #202020;
   border-style: solid;
   border-color: #ffc0cb;
   border-radius: 0 30px 30px 0;
@@ -25,6 +27,7 @@
 
 .map-info-downloads {
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .map-info-downloads-item {
@@ -37,5 +40,24 @@
   color: #0d7700;
 }
 .map-info-downloads-item-not-downloaded {
-  color: #5d000a;
+  color: #8b0000;
+}
+
+.map-info-button {
+  padding: 10px 20px;
+  cursor: pointer;
+
+  background-color: #008b8b60;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+}
+.map-info-button:hover {
+  background-color: #008b8b90;
+}
+.map-info-button:active {
+  background-color: #008b8b;
+}
+.map-info-button:focus {
+  outline: none;
 }

@@ -57,6 +57,17 @@ function MapInfo({ map, devices }: { map: BeatMap; devices: Device[] }) {
             })}
           </ul>
         </div>
+        <button
+          className="map-info-button"
+          type="button"
+          onClick={() => {
+            window.electron.openExternal(
+              `https://osu.ppy.sh/beatmapsets/${map.id}`
+            );
+          }}
+        >
+          Open in browser
+        </button>
       </div>
     </div>
   );
