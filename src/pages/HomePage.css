@@ -34,9 +34,6 @@
   float: right;
 
   overflow: auto;
-
-  border-style: solid;
-  border-color: red;
 }
 
 .map-list::-webkit-scrollbar {

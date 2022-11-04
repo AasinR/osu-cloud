@@ -20,7 +20,11 @@ function HomePage() {
       <div className="map-filter">Menu</div>
       <div className="map-area">
         <div className="map-info">
-          {activeMap ? <MapInfo map={activeMap} /> : ''}
+          {activeMap && saveFile ? (
+            <MapInfo map={activeMap} devices={saveFile.devices} />
+          ) : (
+            ''
+          )}
         </div>
         <div className="map-list">
           {mapList.map((item) => {
