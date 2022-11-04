@@ -6,19 +6,21 @@ function MapCard({
   title,
   artist,
   creator,
+  downloaded,
   onClick,
 }: {
   mapsetID: number;
   title: string;
   artist: string;
   creator: string;
+  downloaded: boolean;
   onClick: (data: number) => void;
 }) {
   const [active, setActive] = useState<boolean>(false);
   const image = `https://assets.ppy.sh/beatmaps/${mapsetID}/covers/list.jpg`;
   return (
     <div
-      className="map-card"
+      className={`map-card ${downloaded ? 'downloaded' : 'not-downloaded'}`}
       role="button"
       tabIndex={-1}
       onClick={() => {

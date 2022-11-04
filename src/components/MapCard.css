@@ -5,19 +5,32 @@
   height: var(--card-height);
   margin: 10px 0;
   overflow: hidden;
+  cursor: pointer;
 
-  background-color: #ff66aa60;
   border-style: solid;
   border-color: #ffc0cb;
   border-radius: 10px 0 0 10px;
 }
 
-.map-card:hover {
+.downloaded {
+  background-color: #ff66aa60;
+}
+.downloaded:hover {
   background-color: #ff66aa90;
 }
+.downloaded:focus {
+  background-color: #ff66aa;
+  outline: none;
+}
 
-.map-card:focus {
-  background-color: #ff66aa99;
+.not-downloaded {
+  background-color: #bb66ff60;
+}
+.not-downloaded:hover {
+  background-color: #bb66ff90;
+}
+.not-downloaded:focus {
+  background-color: #bb66ff;
   outline: none;
 }
 
