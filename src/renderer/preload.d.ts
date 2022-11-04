@@ -1,6 +1,7 @@
 declare global {
   interface Window {
     electron: {
+      openExternal: (url: string) => void;
       localDataList: () => Promise<LocalBeatmap[]>;
       getAccessToken: () => Promise<{
         accessToken: string;

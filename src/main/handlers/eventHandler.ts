@@ -1,8 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import si from 'systeminformation';
+import { shell } from 'electron';
 import os from 'os';
 import fileHandler from './fileHandler';
 import osu from './osu';
+
+/**
+ * Open url in the browser.
+ */
+function openExternal(event: Electron.IpcMainInvokeEvent, url: string) {
+  shell.openExternal(url);
+}
 
 /**
  * Returns local mapset meta data array.
@@ -48,6 +56,7 @@ function writeSaveFile(event: Electron.IpcMainInvokeEvent, data: SaveFile) {
 }
 
 const eventHandler = {
+  openExternal,
   localDataList,
   getAccessToken,
   deviceData,

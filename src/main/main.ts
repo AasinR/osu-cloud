@@ -128,6 +128,7 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    ipcMain.handle('open-external-url', eventHandler.openExternal);
     ipcMain.handle('local-mapset-list', eventHandler.localDataList);
     ipcMain.handle('osu-access-token', eventHandler.getAccessToken);
     ipcMain.handle('device-data', eventHandler.deviceData);
