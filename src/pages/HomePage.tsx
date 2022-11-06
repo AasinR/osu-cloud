@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSaveFile } from 'hooks';
-import { MapCard, MapInfo } from 'components';
+import { MapCard, MapInfo, SearchFilter } from 'components';
 import { sortMaps } from 'utils/data';
 import './HomePage.css';
 
@@ -27,6 +27,7 @@ function HomePage() {
           )}
         </div>
         <div className="map-list">
+          <SearchFilter devices={saveFile ? saveFile.devices : []} />
           {mapList.map((item) => {
             return (
               <MapCard

@@ -1,0 +1,46 @@
+.search-filter {
+  height: 40px;
+  overflow: hidden;
+
+  border-style: solid;
+  border-color: #ffc0cb;
+  border-radius: 0 0 0 10px;
+}
+
+.search-bar {
+  height: 100%;
+  float: left;
+  display: inline;
+}
+
+.search-bar-input {
+  height: 100%;
+  outline: none;
+  border: none;
+}
+.search-bar-input:focus {
+  outline: none;
+}
+
+.search-filter-sort {
+  height: 100%;
+  float: left;
+  border-style: solid;
+  border-color: red;
+}
+
+.search-filter-select {
+  height: 100%;
+  outline: none;
+  border: 0;
+}
+.search-filter-select:focus {
+  outline: none;
+}
+
+.search-filter-device {
+  height: 100%;
+  float: right;
+  border-style: solid;
+  border-color: red;
+}
