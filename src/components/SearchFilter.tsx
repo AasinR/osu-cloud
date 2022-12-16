@@ -45,28 +45,25 @@ function SearchFilter({
 
     return (
         <div className="search-filter">
-            <div className="search-bar">
+            <div id="search-bar" className="search-row">
                 <input
-                    className="search-bar-input"
                     type="text"
                     placeholder="Search..."
                     spellCheck={false}
                     value={searchValue}
-                    onChange={(event) => {
-                        setSearchValue(event.target.value);
-                    }}
+                    onChange={(event) => setSearchValue(event.target.value)}
                 />
             </div>
-            <div className="search-filter-menu">
-                <div className="search-filter-sort">
-                    <label className="sort-label" htmlFor="sort-select">
+            <div id="search-menu" className="search-row">
+                <div className="search-menu-sort">
+                    <label className="search-menu-label" htmlFor="sort-select">
                         Sort by:
                         <select
                             id="sort-select"
                             className="search-filter-select"
-                            onChange={(event) => {
-                                setSortFilter(event.target.value);
-                            }}
+                            onChange={(event) =>
+                                setSortFilter(event.target.value)
+                            }
                         >
                             {sortOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -78,9 +75,7 @@ function SearchFilter({
                     <button
                         className="sort-button"
                         type="button"
-                        onClick={() => {
-                            setReverse(!reverse);
-                        }}
+                        onClick={() => setReverse(!reverse)}
                     >
                         <img
                             className="sort-icon"
@@ -95,9 +90,7 @@ function SearchFilter({
                         <select
                             id="device-select"
                             className="search-filter-select"
-                            onChange={(event) => {
-                                setDevice(event.target.value);
-                            }}
+                            onChange={(event) => setDevice(event.target.value)}
                         >
                             {deviceOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
