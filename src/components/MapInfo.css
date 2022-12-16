@@ -1,63 +1,63 @@
 .map-info-container {
-  width: calc(100% - 10px);
-  height: auto;
-  margin-top: 10px;
-  overflow: hidden;
-  cursor: default;
+    width: calc(100% - 10px);
+    height: auto;
+    margin-top: 10px;
+    overflow: hidden;
+    cursor: default;
 
-  background-color: #202020;
-  border-style: solid;
-  border-color: #ffc0cb;
-  border-radius: 0 30px 30px 0;
+    background-color: #202020;
+    border-style: solid;
+    border-color: #ffc0cb;
+    border-radius: 0 30px 30px 0;
 }
 
 .map-info-cover {
-  width: 100%;
+    width: 100%;
 }
 
 .map-info-data {
-  margin-left: 10px;
-  margin-bottom: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .map-info-title {
-  font-weight: bold;
-  font-size: 1.8em;
+    font-weight: bold;
+    font-size: 1.8em;
 }
 
 .map-info-downloads {
-  margin-top: 10px;
-  margin-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .map-info-downloads-item {
-  margin-left: 30px;
-  display: list-item;
-  list-style-type: circle;
+    margin-left: 30px;
+    display: list-item;
+    list-style-type: circle;
 }
 
 .map-info-downloads-item-downloaded {
-  color: #0d7700;
+    color: #0d7700;
 }
 .map-info-downloads-item-not-downloaded {
-  color: #8b0000;
+    color: #8b0000;
 }
 
 .map-info-button {
-  padding: 10px 20px;
-  cursor: pointer;
+    padding: 10px 20px;
+    cursor: pointer;
 
-  background-color: #008b8b60;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
+    background-color: #008b8b60;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
 }
 .map-info-button:hover {
-  background-color: #008b8b90;
+    background-color: #008b8b90;
 }
 .map-info-button:active {
-  background-color: #008b8b;
+    background-color: #008b8b;
 }
 .map-info-button:focus {
-  outline: none;
+    outline: none;
 }

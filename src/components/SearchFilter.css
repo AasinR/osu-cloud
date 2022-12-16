@@ -1,59 +1,83 @@
 .search-filter {
-  min-height: 40px;
-  overflow: hidden;
+    min-height: 40px;
+    overflow: hidden;
 
-  border-style: solid;
-  border-color: #ffc0cb;
-  border-radius: 0 0 0 10px;
+    border-style: solid;
+    border-color: #ffc0cb;
+    border-radius: 0 0 0 10px;
 }
 
 .search-bar {
-  height: 40px;
-  width: 100%;
-  float: left;
-  display: inline;
+    height: 40px;
+    width: 100%;
+    float: left;
+    display: inline;
 }
 
 .search-bar-input {
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-  outline: none;
-  border: none;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
 }
 .search-bar-input:focus {
-  outline: none;
+    outline: none;
 }
 
 .search-filter-menu {
-  height: 40px;
-  width: 100%;
-  float: right;
+    height: 40px;
+    width: 100%;
+    float: right;
 }
 
 .search-filter-sort {
-  height: 100%;
-  float: left;
-  border-style: solid;
-  border-color: red;
+    height: 100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-style: solid;
+    border-color: red;
+}
+
+.sort-label {
+    height: 100%;
 }
 
 .search-filter-select {
-  height: 100%;
-  outline: none;
-  border: 0;
+    height: 100%;
+    outline: none;
+    border: 0;
 }
 .search-filter-select:focus {
-  outline: none;
+    outline: none;
 }
 
-.search-filter-checkbox {
-  padding: 100px;
+.sort-button {
+    width: 28px;
+    height: 28px;
+    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #404040;
+    border-radius: 4px;
+}
+.sort-button:focus {
+    outline: none;
+}
+
+.sort-icon {
+    width: 90%;
+    height: 90%;
 }
 
 .search-filter-device {
-  height: 100%;
-  float: right;
-  border-style: solid;
-  border-color: red;
+    height: 100%;
+    float: right;
+    border-style: solid;
+    border-color: red;
 }

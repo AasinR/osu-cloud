@@ -1,50 +1,50 @@
 .map-card {
-  --card-height: 110px;
+    --card-height: 110px;
 
-  display: flex;
-  height: var(--card-height);
-  margin: 10px 0;
-  overflow: hidden;
-  cursor: pointer;
+    display: flex;
+    height: var(--card-height);
+    margin: 10px 0;
+    overflow: hidden;
+    cursor: pointer;
 
-  border-style: solid;
-  border-color: #ffc0cb;
-  border-radius: 10px 0 0 10px;
+    border-style: solid;
+    border-color: #ffc0cb;
+    border-radius: 10px 0 0 10px;
 }
 
 .map-card-downloaded {
-  background-color: #ff66aa60;
+    background-color: #ff66aa60;
 }
 .map-card-downloaded:hover {
-  background-color: #ff66aa90;
+    background-color: #ff66aa90;
 }
 .map-card-downloaded:focus {
-  background-color: #ff66aa;
-  outline: none;
+    background-color: #ff66aa;
+    outline: none;
 }
 
 .map-card-not-downloaded {
-  background-color: #bb66ff60;
+    background-color: #bb66ff60;
 }
 .map-card-not-downloaded:hover {
-  background-color: #bb66ff90;
+    background-color: #bb66ff90;
 }
 .map-card-not-downloaded:focus {
-  background-color: #bb66ff;
-  outline: none;
+    background-color: #bb66ff;
+    outline: none;
 }
 
 .map-card-cover {
-  height: var(--card-height);
-  width: var(--card-height);
+    height: var(--card-height);
+    width: var(--card-height);
 }
 
 .map-card-data {
-  margin-left: 10px;
-  white-space: nowrap;
+    margin-left: 10px;
+    white-space: nowrap;
 }
 
 .map-card-title {
-  font-weight: bold;
-  font-size: 1.5em;
+    font-weight: bold;
+    font-size: 1.5em;
 }

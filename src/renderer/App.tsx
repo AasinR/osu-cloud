@@ -5,16 +5,16 @@ import { useFetchToken } from 'hooks';
 import './App.css';
 
 export default function App() {
-  const { accessToken } = useFetchToken();
+    const { accessToken } = useFetchToken();
 
-  return (
-    <TokenContext.Provider value={accessToken}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/error" element={<ErrorPage />} />
-        </Routes>
-      </Router>
-    </TokenContext.Provider>
-  );
+    return (
+        <TokenContext.Provider value={accessToken}>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/error" element={<ErrorPage />} />
+                </Routes>
+            </Router>
+        </TokenContext.Provider>
+    );
 }

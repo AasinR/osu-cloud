@@ -1,44 +1,44 @@
 :root {
-  --filter-height: 60px;
+    --filter-height: 60px;
 }
 
 .map-filter {
-  width: 100%;
-  height: var(--filter-height);
+    width: 100%;
+    height: var(--filter-height);
 
-  border-style: solid;
-  border-color: blue;
+    border-style: solid;
+    border-color: blue;
 }
 
 .map-area {
-  position: absolute;
-  width: 100%;
-  height: calc(100% - var(--filter-height));
+    position: absolute;
+    width: 100%;
+    height: calc(100% - var(--filter-height));
 }
 
 .map-info {
-  width: 50%;
-  height: 100%;
-  float: left;
+    width: 50%;
+    height: 100%;
+    float: left;
 }
 
 .map-list {
-  width: 50%;
-  height: 100%;
-  float: right;
+    width: 50%;
+    height: 100%;
+    float: right;
 
-  overflow: auto;
+    overflow: auto;
 }
 
 .map-list::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+    width: 6px;
+    height: 6px;
 }
 
 .map-list::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 .map-list::-webkit-scrollbar-thumb {
-  background-color: #666666;
+    background-color: #666666;
 }
