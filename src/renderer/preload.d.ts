@@ -3,10 +3,6 @@ declare global {
         electron: {
             openExternal: (url: string) => void;
             localDataList: () => Promise<LocalBeatmap[]>;
-            getAccessToken: () => Promise<{
-                accessToken: string;
-                expirationDate: Date;
-            }>;
             deviceData: () => Promise<Device>;
             loadSaveFile: () => Promise<SaveFile>;
             writeSaveFile: (data: SaveFile) => void;

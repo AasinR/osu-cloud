@@ -3,7 +3,6 @@ import si from 'systeminformation';
 import { shell } from 'electron';
 import os from 'os';
 import fileHandler from './fileHandler';
-import osu from './osu';
 
 /**
  * Open url in the browser.
@@ -18,21 +17,6 @@ function openExternal(event: Electron.IpcMainInvokeEvent, url: string) {
 function localDataList(event: Electron.IpcMainInvokeEvent): LocalBeatmap[] {
     const localData: LocalBeatmap[] = fileHandler.getLocalDataList();
     return localData;
-}
-
-/**
- * Returns a client credential token.
- */
-async function getAccessToken(event: Electron.IpcMainInvokeEvent): Promise<{
-    accessToken: string;
-    expirationDate: Date;
-}> {
-    const response = await osu.getAccessToken();
-    const accessToken: string = response.access_token;
-    const expirationDate: Date = new Date(
-        new Date().getTime() + response.expires_in * 1000
-    );
-    return { accessToken, expirationDate };
 }
 
 /**
@@ -58,7 +42,6 @@ function writeSaveFile(event: Electron.IpcMainInvokeEvent, data: SaveFile) {
 const eventHandler = {
     openExternal,
     localDataList,
-    getAccessToken,
     deviceData,
     loadSaveFile,
     writeSaveFile,

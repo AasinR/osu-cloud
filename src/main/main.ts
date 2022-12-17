@@ -12,14 +12,11 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import dotenv from 'dotenv';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import eventHandler from './handlers/eventHandler';
 import fileHandler from './handlers/fileHandler';
 
-// before launch config
-dotenv.config();
 fileHandler.createDataDir();
 
 class AppUpdater {
@@ -129,7 +126,6 @@ app.whenReady()
     .then(() => {
         ipcMain.handle('open-external-url', eventHandler.openExternal);
         ipcMain.handle('local-mapset-list', eventHandler.localDataList);
-        ipcMain.handle('osu-access-token', eventHandler.getAccessToken);
         ipcMain.handle('device-data', eventHandler.deviceData);
         ipcMain.handle('load-save-file', eventHandler.loadSaveFile);
         ipcMain.handle('write-save-file', eventHandler.writeSaveFile);
