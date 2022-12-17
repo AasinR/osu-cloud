@@ -36,8 +36,7 @@ function readMetaData(dirPath: string) {
         if (data === '[Metadata]' || data === '') return;
         const index: number = data.indexOf(':');
         const key: string = data.substring(0, index);
-        const value: string = data.substring(index + 1);
-        metaData[key] = value;
+        metaData[key] = data.substring(index + 1);
     });
     return metaData;
 }
@@ -97,8 +96,7 @@ async function writeSaveFile(data?: SaveFile) {
 async function loadSaveFile(): Promise<SaveFile> {
     if (!fs.existsSync(SaveFilePath)) await writeSaveFile();
     const saveFile: string = fs.readFileSync(SaveFilePath).toString();
-    const data: SaveFile = JSON.parse(saveFile);
-    return data;
+    return JSON.parse(saveFile);
 }
 
 const fileHandler = {

@@ -6,7 +6,7 @@ import './HomePage.css';
 
 function HomePage() {
     const { saveFile, device } = useSaveFile();
-    const [activeMap, setActiveMap] = useState<BeatMap | null>(null);
+    const [activeMap, setActiveMap] = useState<BeatMap>();
     const [mapList, setMapList] = useState<BeatMap[]>([]);
     const [filteredList, setFilteredList] = useState<BeatMap[]>([]);
 
@@ -20,6 +20,13 @@ function HomePage() {
 
     const handleSearch = (result: BeatMap[]) => {
         setFilteredList(result);
+    };
+
+    const handleCardClick = (mapsetID: number) => {
+        const map = mapList.find((obj) => {
+            return obj.id === mapsetID;
+        });
+        if (map) setActiveMap(map);
     };
 
     return (
@@ -47,16 +54,10 @@ function HomePage() {
                                 title={item.metadata.Title}
                                 artist={item.metadata.Artist}
                                 creator={item.metadata.Creator}
-                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                 downloaded={item.downloaded.includes(
-                                    device!.uuid
+                                    device?.uuid as string
                                 )}
-                                onClick={(mapsetID: number) => {
-                                    const map = mapList.find((obj) => {
-                                        return obj.id === mapsetID;
-                                    });
-                                    if (map) setActiveMap(map);
-                                }}
+                                onClick={handleCardClick}
                             />
                         );
                     })}

@@ -47,16 +47,16 @@
     padding: 10px 20px;
     cursor: pointer;
 
-    background-color: #008b8b60;
+    background-color: #303030;
     color: #ffffff;
     border: none;
     border-radius: 5px;
 }
 .map-info-button:hover {
-    background-color: #008b8b90;
+    background-color: #353535;
 }
 .map-info-button:active {
-    background-color: #008b8b;
+    background-color: #404040;
 }
 .map-info-button:focus {
     outline: none;
