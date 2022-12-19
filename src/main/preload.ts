@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('electron', {
     openExternal: (url: string) => ipcRenderer.invoke('open-external-url', url),
+    selectFolder: () => ipcRenderer.invoke('select-folder'),
     localDataList: () => ipcRenderer.invoke('local-mapset-list'),
     deviceData: () => ipcRenderer.invoke('device-data'),
     loadSaveFile: () => ipcRenderer.invoke('load-save-file'),

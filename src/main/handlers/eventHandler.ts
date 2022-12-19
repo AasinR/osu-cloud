@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import si from 'systeminformation';
-import { shell } from 'electron';
+import { shell, dialog } from 'electron';
 import os from 'os';
 import fileHandler from './fileHandler';
 
@@ -9,6 +9,14 @@ import fileHandler from './fileHandler';
  */
 function openExternal(event: Electron.IpcMainInvokeEvent, url: string) {
     shell.openExternal(url);
+}
+
+function selectFolder(): string {
+    const result = dialog.showOpenDialogSync({
+        properties: ['openDirectory'],
+    });
+    if (result) return result[0];
+    return '';
 }
 
 /**
@@ -38,6 +46,7 @@ function writeSaveFile(event: Electron.IpcMainInvokeEvent, data: SaveFile) {
 
 const eventHandler = {
     openExternal,
+    selectFolder,
     localDataList,
     deviceData,
     loadSaveFile,

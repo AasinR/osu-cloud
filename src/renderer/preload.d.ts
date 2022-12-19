@@ -2,6 +2,7 @@ declare global {
     interface Window {
         electron: {
             openExternal: (url: string) => void;
+            selectFolder: () => Promise<string>;
             localDataList: () => Promise<LocalBeatmap[]>;
             deviceData: () => Promise<Device>;
             loadSaveFile: () => Promise<SaveFile>;
