@@ -6,8 +6,8 @@ export default function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/a" element={<HomePage />} />
-                <Route path="/" element={<GameNotFound />} />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/a" element={<GameNotFound />} />
                 <Route path="/error" element={<ErrorPage />} />
             </Routes>
         </Router>

@@ -4,6 +4,7 @@ declare global {
             openExternal: (url: string) => void;
             selectFolder: () => Promise<string>;
             getDevice: () => Promise<Device>;
+            getSaveData: () => Promise<SaveData>;
         };
     }
 }

@@ -3,16 +3,21 @@ import { sortMaps } from 'utils/data';
 import './SearchFilter.css';
 import sortIcon from '../../assets/icons/sort-icon.png'; // https://icons8.com/icons/set/sort-order put it into about section!!!!!
 
+interface SortOption {
+    name: string;
+    value: 'Title' | 'Artist' | 'Creator';
+}
+
 function SearchFilter({
     devices,
     searchList,
     onSearch,
 }: {
     devices: Device[];
-    searchList: BeatMap[];
-    onSearch: (result: BeatMap[]) => void;
+    searchList: Beatmap[];
+    onSearch: (result: Beatmap[]) => void;
 }) {
-    const sortOptions = [
+    const sortOptions: SortOption[] = [
         { name: 'Title', value: 'Title' },
         { name: 'Artist', value: 'Artist' },
         { name: 'Creator', value: 'Creator' },
@@ -24,14 +29,16 @@ function SearchFilter({
     ];
 
     const [searchValue, setSearchValue] = useState<string>('');
-    const [sortFilter, setSortFilter] = useState<string>(sortOptions[0].value);
+    const [sortFilter, setSortFilter] = useState<
+        'Title' | 'Artist' | 'Creator'
+    >(sortOptions[0].value);
     const [reverse, setReverse] = useState<boolean>(false);
     const [device, setDevice] = useState<string>(deviceOptions[0].value);
 
     // search runs when a value changes
     useEffect(() => {
         const searchWord = searchValue.toLowerCase();
-        const result: BeatMap[] = searchList.filter((value: BeatMap) => {
+        const result: Beatmap[] = searchList.filter((value: Beatmap) => {
             return (
                 (device === '1' || value.downloaded.includes(device)) &&
                 (value.metadata.Title.toLowerCase().includes(searchWord) ||
@@ -62,7 +69,9 @@ function SearchFilter({
                             id="sort-select"
                             className="search-filter-select"
                             onChange={(event) =>
-                                setSortFilter(event.target.value)
+                                setSortFilter(
+                                    event.target.value as SortOption['value']
+                                )
                             }
                         >
                             {sortOptions.map((option) => (

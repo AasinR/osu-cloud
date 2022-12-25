@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './MapInfo.css';
 
-function MapInfo({ map, devices }: { map: BeatMap; devices: Device[] }) {
+function MapInfo({ map, devices }: { map: Beatmap; devices: Device[] }) {
     const [deviceList, setDeviceList] = useState<
         { device: Device; downloaded: boolean }[]
     >([]);
@@ -9,7 +9,7 @@ function MapInfo({ map, devices }: { map: BeatMap; devices: Device[] }) {
 
     useEffect(() => {
         (async () => {
-            const currDevice: Device = await window.electron.deviceData();
+            const currDevice: Device = await window.electron.getDevice();
             const dev: { device: Device; downloaded: boolean }[] = [];
 
             devices.forEach((device: Device) => {

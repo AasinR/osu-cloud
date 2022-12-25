@@ -14,12 +14,12 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './utils/util';
-import eventHandler from './handlers/eventHandler';
-import fileHandler from './handlers/fileHandler';
-import { findOsuFolder } from './utils/systemUtils';
+import { createDataDir } from './utils/saveUtils';
+import { channel } from './ipc/channels';
+import * as events from './ipc/eventHandler';
 
-fileHandler.createDataDir();
-console.log(`osu installed:${findOsuFolder()}`);
+// create the data folder if it doesn't exist.
+createDataDir();
 
 class AppUpdater {
     constructor() {
@@ -126,12 +126,12 @@ app.on('window-all-closed', () => {
 
 app.whenReady()
     .then(() => {
-        ipcMain.handle('open-external-url', eventHandler.openExternal);
-        ipcMain.handle('select-folder', eventHandler.selectFolder);
-        ipcMain.handle('local-mapset-list', eventHandler.localDataList);
-        ipcMain.handle('device-data', eventHandler.deviceData);
-        ipcMain.handle('load-save-file', eventHandler.loadSaveFile);
-        ipcMain.handle('write-save-file', eventHandler.writeSaveFile);
+        // load ipc events
+        ipcMain.handle(channel.openExternal, events.openExternal);
+        ipcMain.handle(channel.selectFolder, events.selectFolder);
+        ipcMain.handle(channel.getDevice, events.getDevice);
+        ipcMain.handle(channel.getSaveData, events.getSaveData);
+
         createWindow();
         app.on('activate', () => {
             // On macOS it's common to re-create a window in the app when the

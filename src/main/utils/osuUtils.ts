@@ -57,7 +57,8 @@ export function getMetadata(dirPath: string): BeatmapMetadata {
  * Returns the local unique beatmaps.
  */
 export function getLocalBeatmaps(): LocalBeatmap[] {
-    const OSU_PATH = global.settings.gamePath;
+    // TODO: rewrite path to 'global.settings.gamePath'
+    const OSU_PATH = `${homedir()}/AppData/Local/osu!/Songs/`;
 
     const folders: string[] = readdirSync(OSU_PATH);
     const beatmaps: LocalBeatmap[] = [];

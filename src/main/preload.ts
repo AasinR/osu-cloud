@@ -1,11 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron';
+import { channel } from './ipc/channels';
 
 contextBridge.exposeInMainWorld('electron', {
-    openExternal: (url: string) => ipcRenderer.invoke('open-external-url', url),
-    selectFolder: () => ipcRenderer.invoke('select-folder'),
-    localDataList: () => ipcRenderer.invoke('local-mapset-list'),
-    deviceData: () => ipcRenderer.invoke('device-data'),
-    loadSaveFile: () => ipcRenderer.invoke('load-save-file'),
-    writeSaveFile: (data: SaveFile) =>
-        ipcRenderer.invoke('write-save-file', data),
+    openExternal: (url: string) =>
+        ipcRenderer.invoke(channel.openExternal, url),
+    selectFolder: () => ipcRenderer.invoke(channel.selectFolder),
+    getDevice: () => ipcRenderer.invoke(channel.getDevice),
+    getSaveData: () => ipcRenderer.invoke(channel.getSaveData),
 });

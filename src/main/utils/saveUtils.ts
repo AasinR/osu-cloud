@@ -52,9 +52,21 @@ export function loadSettings() {
 }
 
 /**
- * Create a new save file.
+ * Checks if a save file exists or not.
  */
-export async function newSaveFile() {
+export function existsSaveFile(): boolean {
+    try {
+        locateFile(DATA_PATH, /^osu-save_/);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+/**
+ * Create a new save file, then returns it.
+ */
+export async function newSaveFile(): Promise<SaveData> {
     const device = await getDeviceInfo();
     const localBeatmaps = getLocalBeatmaps();
     const beatmaps: Beatmap[] = [];
@@ -65,13 +77,20 @@ export async function newSaveFile() {
             downloaded: [device.uuid],
         });
     });
+    // sort beatmap array by id
+    beatmaps.sort((a, b) => {
+        if (a.id < b.id) return -1;
+        if (a.id > b.id) return 1;
+        return 0;
+    });
     const newSave: SaveData = {
         devices: [device],
         beatmaps,
     };
-    const dataData = JSON.stringify(newSave);
+    const saveString = JSON.stringify(newSave);
     const fileName = `osu-save_${Date.now()}.json`;
-    writeFileSync(`${DATA_PATH}\\${fileName}`, dataData);
+    writeFileSync(`${DATA_PATH}\\${fileName}`, saveString);
+    return newSave;
 }
 
 /**

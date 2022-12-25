@@ -1,7 +1,12 @@
 import { shell, dialog } from 'electron';
 import { getDeviceInfo, removeItem } from '../utils/systemUtils';
 import { getLocalBeatmaps } from '../utils/osuUtils';
-import { loadSaveFile } from '../utils/saveUtils';
+import {
+    existsSaveFile,
+    loadSaveFile,
+    newSaveFile,
+    writeSaveFile,
+} from '../utils/saveUtils';
 
 /**
  * Opens the given url in the browser.
@@ -30,7 +35,13 @@ export function getDevice(): Promise<Device> {
     return getDeviceInfo();
 }
 
-export async function getSaveData() {
+/**
+ * Updates the save file data then returns it.
+ */
+export async function getSaveData(): Promise<SaveData> {
+    // if the save file doesn't exist, create a new
+    if (!existsSaveFile()) return newSaveFile();
+
     const currentDevice: Device = await getDeviceInfo();
     const localData: LocalBeatmap[] = getLocalBeatmaps();
     const saveData: SaveData = loadSaveFile();
@@ -49,7 +60,7 @@ export async function getSaveData() {
         return 0;
     });
 
-    // TODO: update save file with local data
+    // update downloads info and remove redundant beatmaps
     saveData.beatmaps.forEach((saved: Beatmap) => {
         const downloaded: boolean = saved.downloaded.includes(
             currentDevice.uuid
@@ -57,7 +68,6 @@ export async function getSaveData() {
         const found = localData.find(
             (item: LocalBeatmap) => item.id === saved.id
         );
-
         if (!found && downloaded) {
             removeItem(saved.downloaded, currentDevice.uuid);
             if (!saved.downloaded.length) removeItem(saveData.beatmaps, saved);
@@ -67,5 +77,28 @@ export async function getSaveData() {
         }
     });
 
-    // TODO: write new data into file
+    // add new beatmaps from local
+    localData.forEach((local: LocalBeatmap) => {
+        const found = saveData.beatmaps.find(
+            (item: Beatmap) => item.id === local.id
+        );
+        if (!found) {
+            saveData.beatmaps.push({
+                id: local.id,
+                metadata: local.metadata,
+                downloaded: [currentDevice.uuid],
+            });
+        }
+    });
+
+    // sort beatmap array by id
+    saveData.beatmaps.sort((a, b) => {
+        if (a.id < b.id) return -1;
+        if (a.id > b.id) return 1;
+        return 0;
+    });
+
+    // write data into the save file
+    writeSaveFile(saveData);
+    return saveData;
 }
