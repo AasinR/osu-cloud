@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { MapCard, MapInfo, SearchFilter } from 'components';
 import LoadingPage from './LoadingPage';
 import './HomePage.css';
@@ -24,9 +24,9 @@ function HomePage() {
         loadPage();
     }, []);
 
-    const handleSearch = (result: Beatmap[]) => {
+    const handleSearch = useCallback((result: Beatmap[]) => {
         setViewList(result);
-    };
+    }, []);
 
     const handleCardClick = (mapsetID: number) => {
         const map = saveData?.beatmaps.find((obj) => {

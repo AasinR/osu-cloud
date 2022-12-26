@@ -46,9 +46,9 @@ function SearchFilter({
                     value.metadata.Creator.toLowerCase().includes(searchWord))
             );
         });
-        onSearch(sortMaps(result, sortFilter, reverse));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [device, reverse, searchList, searchValue, sortFilter]);
+        sortMaps(result, sortFilter, reverse);
+        onSearch(result);
+    }, [reverse, searchValue, sortFilter, onSearch, searchList, device]);
 
     return (
         <div className="search-filter">
