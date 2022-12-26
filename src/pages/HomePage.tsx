@@ -28,11 +28,8 @@ function HomePage() {
         setViewList(result);
     }, []);
 
-    const handleCardClick = (mapsetID: number) => {
-        const map = saveData?.beatmaps.find((obj) => {
-            return obj.id === mapsetID;
-        });
-        if (map) setSelected(map);
+    const handleCardClick = (beatmap: Beatmap) => {
+        setSelected(beatmap);
     };
 
     if (loading) return <LoadingPage />;
@@ -40,28 +37,26 @@ function HomePage() {
         <div className="page">
             <div className="map-info">
                 {selected ? (
-                    <MapInfo map={selected} devices={saveData!.devices} />
+                    <MapInfo map={selected} devices={saveData?.devices ?? []} />
                 ) : (
                     ''
                 )}
             </div>
             <div className="map-list">
                 <SearchFilter
-                    devices={saveData!.devices}
-                    searchList={saveData!.beatmaps}
+                    devices={saveData?.devices ?? []}
+                    searchList={saveData?.beatmaps ?? []}
                     onSearch={handleSearch}
                 />
-                {viewList!.map((item) => {
+                {viewList?.map((item: Beatmap) => {
                     return (
                         <MapCard
                             key={item.id}
-                            mapsetID={item.id}
-                            title={item.metadata.Title}
-                            artist={item.metadata.Artist}
-                            creator={item.metadata.Creator}
+                            beatmap={item}
                             downloaded={item.downloaded.includes(
-                                device?.uuid as string
+                                device?.uuid ?? ''
                             )}
+                            selected={selected?.id === item.id}
                             onClick={handleCardClick}
                         />
                     );

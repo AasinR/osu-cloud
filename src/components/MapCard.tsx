@@ -1,45 +1,37 @@
-import { useState } from 'react';
 import './MapCard.css';
 
 function MapCard({
-    mapsetID,
-    title,
-    artist,
-    creator,
+    beatmap,
     downloaded,
+    selected,
     onClick,
 }: {
-    mapsetID: number;
-    title: string;
-    artist: string;
-    creator: string;
+    beatmap: Beatmap;
     downloaded: boolean;
-    onClick: (data: number) => void;
+    selected: boolean;
+    onClick: (beatmap: Beatmap) => void;
 }) {
-    const [active, setActive] = useState<boolean>(false);
-    const image = `https://assets.ppy.sh/beatmaps/${mapsetID}/covers/list.jpg`;
+    const image = `https://assets.ppy.sh/beatmaps/${beatmap.id}/covers/list.jpg`;
     return (
         <div
-            className={`map-card ${
-                downloaded ? 'map-card-downloaded' : 'map-card-not-downloaded'
-            }`}
+            className={`map-card map-card-${
+                downloaded ? 'downloaded' : 'not-downloaded'
+            }${selected ? '-selected' : ''}`}
             role="button"
             tabIndex={-1}
             onClick={() => {
-                if (!active) onClick(mapsetID);
-                setActive(true);
+                if (!selected) onClick(beatmap);
             }}
             onKeyDown={() => {}}
-            onBlur={() => setActive(false)}
         >
             <img
                 className="map-card-cover"
                 src={image}
-                alt={`${title} cover`}
+                alt={`${beatmap.metadata.Title} cover`}
             />
             <div className="map-card-data">
-                <p className="map-card-title">{title}</p>
-                <p className="map-card-info">{`${artist} // ${creator}`}</p>
+                <p className="map-card-title">{beatmap.metadata.Title}</p>
+                <p className="map-card-info">{`${beatmap.metadata.Artist} // ${beatmap.metadata.Creator}`}</p>
             </div>
         </div>
     );

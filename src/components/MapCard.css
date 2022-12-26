@@ -11,6 +11,9 @@
     border-color: #ffc0cb;
     border-radius: 10px 0 0 10px;
 }
+.map-card:focus {
+    outline: none;
+}
 
 .map-card-downloaded {
     background-color: #ff66aa60;
@@ -20,7 +23,10 @@
 }
 .map-card-downloaded:focus {
     background-color: #ff66aa;
-    outline: none;
+}
+
+.map-card-downloaded-selected {
+    background-color: #ff66aa;
 }
 
 .map-card-not-downloaded {
@@ -31,7 +37,10 @@
 }
 .map-card-not-downloaded:focus {
     background-color: #bb66ff;
-    outline: none;
+}
+
+.map-card-not-downloaded-selected {
+    background-color: #bb66ff;
 }
 
 .map-card-cover {
