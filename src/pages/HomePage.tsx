@@ -37,7 +37,11 @@ function HomePage() {
         <div className="page">
             <div className="map-info">
                 {selected ? (
-                    <MapInfo map={selected} devices={saveData?.devices ?? []} />
+                    <MapInfo
+                        map={selected}
+                        currentDevice={device?.uuid ?? ''}
+                        devices={saveData?.devices ?? []}
+                    />
                 ) : (
                     ''
                 )}

@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
 import './MapInfo.css';
 
-function MapInfo({ map, devices }: { map: Beatmap; devices: Device[] }) {
+function MapInfo({
+    map,
+    currentDevice,
+    devices,
+}: {
+    map: Beatmap;
+    currentDevice: Device['uuid'];
+    devices: Device[];
+}) {
     const [deviceList, setDeviceList] = useState<
         { device: Device; downloaded: boolean }[]
     >([]);
@@ -9,7 +17,6 @@ function MapInfo({ map, devices }: { map: Beatmap; devices: Device[] }) {
 
     useEffect(() => {
         (async () => {
-            const currDevice: Device = await window.electron.getDevice();
             const dev: { device: Device; downloaded: boolean }[] = [];
 
             devices.forEach((device: Device) => {
@@ -20,7 +27,7 @@ function MapInfo({ map, devices }: { map: Beatmap; devices: Device[] }) {
                     device: {
                         uuid: device.uuid,
                         name: `${device.name}${
-                            device.uuid === currDevice.uuid ? ' (Current)' : ''
+                            device.uuid === currentDevice ? ' (Current)' : ''
                         }`,
                     },
                     downloaded,
@@ -28,7 +35,7 @@ function MapInfo({ map, devices }: { map: Beatmap; devices: Device[] }) {
             });
             setDeviceList(dev);
         })();
-    }, [devices, map]);
+    }, [currentDevice, devices, map]);
 
     return (
         <div className="map-info-container">
