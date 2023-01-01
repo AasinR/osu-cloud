@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { MapCard, MapInfo, SearchFilter } from 'components';
+import { MapCard, MapInfo, SearchFilter } from 'renderer/components';
 import LoadingPage from './LoadingPage';
 import './BeatmapsPage.css';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { sortMaps } from 'utils/data';
+import { sortMaps } from 'shared/utils/data';
 import './SearchFilter.css';
-import sortIcon from '../../assets/icons/sort-icon.png'; // https://icons8.com/icons/set/sort-order put it into about section!!!!!
+import sortIcon from '../../../assets/icons/sort-icon.png'; // https://icons8.com/icons/set/sort-order put it into about section!!!!!
 
 interface SortOption {
     name: string;

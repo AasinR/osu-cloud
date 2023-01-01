@@ -1,5 +1,5 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import { BeatmapsPage, GameNotFound, ErrorPage } from 'pages';
+import { BeatmapsPage, GameNotFound, ErrorPage } from 'renderer/pages';
 import './App.css';
 
 export default function App() {
