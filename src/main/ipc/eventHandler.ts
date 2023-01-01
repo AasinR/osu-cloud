@@ -30,6 +30,7 @@ export function setSettings(
             throw new Error('A value must be provided with key');
         }
         getSettings()[key] = value;
+        writeSettings(getSettings());
     } else writeSettings(key);
 }
 
