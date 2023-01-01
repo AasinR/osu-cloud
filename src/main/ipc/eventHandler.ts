@@ -1,12 +1,37 @@
 import { shell, dialog } from 'electron';
 import { getDeviceInfo, removeItem } from '../utils/systemUtils';
-import { getLocalBeatmaps } from '../utils/osuUtils';
+import { findOsuFolder, getLocalBeatmaps, osuExists } from '../utils/osuUtils';
 import {
     existsSaveFile,
     loadSaveFile,
     newSaveFile,
     writeSaveFile,
+    writeSettings,
 } from '../utils/saveUtils';
+import { getSettings } from '../../shared/data/settings';
+
+/**
+ * Requests the loaded settings data.
+ */
+export function requestSettings(): SettingsData {
+    return getSettings();
+}
+
+/**
+ * Sets the settings data.
+ */
+export function setSettings(
+    event: Electron.IpcMainInvokeEvent,
+    key: string | SettingsData,
+    value?: unknown
+) {
+    if (typeof key === 'string') {
+        if (typeof value === 'undefined') {
+            throw new Error('A value must be provided with key');
+        }
+        getSettings()[key] = value;
+    } else writeSettings(key);
+}
 
 /**
  * Opens the given url in the browser.
@@ -101,4 +126,17 @@ export async function getSaveData(): Promise<SaveData> {
     // write data into the save file
     writeSaveFile(saveData);
     return saveData;
+}
+
+/**
+ * Checks if the stored GamePath is valid. If not, tries to check the default locations.
+ */
+export function checkGameFolder(): boolean {
+    if (!getSettings().GamePath || !osuExists(getSettings().GamePath)) {
+        const gamePath: string | null = findOsuFolder();
+        if (gamePath === null) return false;
+        getSettings().GamePath = gamePath;
+    }
+    writeSettings(getSettings());
+    return true;
 }

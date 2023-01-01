@@ -1,23 +1,38 @@
-import { homedir } from 'os';
-import { existsSync, readdirSync, readFileSync } from 'fs';
+import { homedir, platform } from 'os';
+import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { locateFile } from './systemUtils';
+import { getSettings } from '../../shared/data/settings';
 
 /**
  * Tries to locate the osu! folder in the default locations.
  */
 export function findOsuFolder(): string | null {
     // windows
-    let folderPath = `${homedir()}/AppData/Local/osu!/`;
+    let folderPath = `${homedir()}\\AppData\\Local\\osu!\\`;
     if (existsSync(folderPath)) {
         return folderPath;
     }
 
     // linux or macOS
-    folderPath = `${homedir()}/osu!/`;
+    folderPath = `${homedir()}\\osu!\\`;
     if (existsSync(folderPath)) {
         return folderPath;
     }
     return null;
+}
+
+/**
+ * Checks if the given directory path contains the osu! executable.
+ */
+export function osuExists(dirPath: string): boolean {
+    const execName = platform() === 'win32' ? 'osu!.exe' : 'osu!';
+    const fullPath = `${dirPath}\\${execName}`;
+    try {
+        statSync(fullPath);
+        return true;
+    } catch (error) {
+        return false;
+    }
 }
 
 /**
@@ -57,8 +72,7 @@ export function getMetadata(dirPath: string): BeatmapMetadata {
  * Returns the local unique beatmaps.
  */
 export function getLocalBeatmaps(): LocalBeatmap[] {
-    // TODO: rewrite path to 'global.settings.gamePath'
-    const OSU_PATH = `${homedir()}/AppData/Local/osu!/Songs/`;
+    const OSU_PATH = `${getSettings().GamePath}\\Songs`;
 
     const folders: string[] = readdirSync(OSU_PATH);
     const beatmaps: LocalBeatmap[] = [];

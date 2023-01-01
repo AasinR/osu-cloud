@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { MapCard, MapInfo, SearchFilter } from 'components';
 import LoadingPage from './LoadingPage';
-import './HomePage.css';
+import './BeatmapsPage.css';
 
-function HomePage() {
+function BeatmapsPage() {
     const [saveData, setSaveData] = useState<SaveData>();
     const [viewList, setViewList] = useState<Beatmap[]>();
     const [selected, setSelected] = useState<Beatmap>();
@@ -70,4 +70,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default BeatmapsPage;

@@ -27,7 +27,8 @@ declare global {
     }
 
     interface SettingsData {
-        gamePath: string;
+        GamePath: string;
+        [key: string]: unknown;
     }
 }
 

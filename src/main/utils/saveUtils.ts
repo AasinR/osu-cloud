@@ -8,6 +8,7 @@ import {
 } from 'fs';
 import { getDeviceInfo, locateFile } from './systemUtils';
 import { getLocalBeatmaps } from './osuUtils';
+import { initSettings } from '../../shared/data/settings';
 
 // save data paths
 const DATA_PATH = `${path.resolve('./')}\\data`;
@@ -27,7 +28,7 @@ export function createDataDir() {
  */
 export function newSettingsFile() {
     const settingsData: SettingsData = {
-        gamePath: '',
+        GamePath: '',
     };
     const dataString = JSON.stringify(settingsData);
     writeFileSync(SETTINGS_PATH, dataString);
@@ -36,10 +37,10 @@ export function newSettingsFile() {
 /**
  * Write the given settings data to file and global variable.
  */
-export function writeSettings(settings: SettingsData) {
-    const dataString = JSON.stringify(settings);
+export function writeSettings(data: SettingsData) {
+    const dataString = JSON.stringify(data);
     writeFileSync(SETTINGS_PATH, dataString);
-    global.settings = settings;
+    initSettings(data);
 }
 
 /**
@@ -48,7 +49,7 @@ export function writeSettings(settings: SettingsData) {
 export function loadSettings() {
     if (!existsSync(SETTINGS_PATH)) newSettingsFile();
     const settingsFile = readFileSync(SETTINGS_PATH).toString();
-    global.settings = JSON.parse(settingsFile);
+    initSettings(JSON.parse(settingsFile));
 }
 
 /**

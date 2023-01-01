@@ -20,7 +20,7 @@
 
 #not-found-title {
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     text-align: center;
     font-size: 2rem;
 }
@@ -35,4 +35,17 @@
 }
 .not-found-button:active {
     background-color: #353535;
+}
+
+.information-valid,
+.information-invalid {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.information-valid {
+    color: #0d7700;
+}
+.information-invalid {
+    color: #8b0000;
 }
