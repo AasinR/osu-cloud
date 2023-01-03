@@ -46,9 +46,12 @@ export function openExternal(event: Electron.IpcMainInvokeEvent, url: string) {
 /**
  * Opens a folder selection menu and returns the path of the selected folder.
  */
-export function selectFolder(): string {
+export function showDialog(
+    event: Electron.IpcMainInvokeEvent,
+    type: 'openFile' | 'openDirectory'
+): string {
     const result = dialog.showOpenDialogSync({
-        properties: ['openDirectory'],
+        properties: [type],
     });
     if (result) return result[0];
     return '';

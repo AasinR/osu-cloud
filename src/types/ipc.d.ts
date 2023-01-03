@@ -2,7 +2,7 @@ declare global {
     interface Window {
         electron: {
             openExternal: (url: string) => void;
-            selectFolder: () => Promise<string>;
+            showDialog: (type: 'openFile' | 'openDirectory') => Promise<string>;
             getDevice: () => Promise<Device>;
             getSaveData: () => Promise<SaveData>;
             checkGameFolder: () => Promise<boolean>;

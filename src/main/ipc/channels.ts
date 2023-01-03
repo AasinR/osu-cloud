@@ -1,7 +1,7 @@
 // ipc channel names
 export const channel = {
     openExternal: 'open-external-url',
-    selectFolder: 'select-folder',
+    showDialog: 'show-dialog',
     getDevice: 'device-information',
     getSaveData: 'request-save-data',
     checkGameFolder: 'valid-game-folder',

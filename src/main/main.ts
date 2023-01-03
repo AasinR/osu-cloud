@@ -120,7 +120,7 @@ app.whenReady()
     .then(() => {
         // load ipc events
         ipcMain.handle(channel.openExternal, events.openExternal);
-        ipcMain.handle(channel.selectFolder, events.selectFolder);
+        ipcMain.handle(channel.showDialog, events.showDialog);
         ipcMain.handle(channel.getDevice, events.getDevice);
         ipcMain.handle(channel.getSaveData, events.getSaveData);
         ipcMain.handle(channel.checkGameFolder, events.checkGameFolder);

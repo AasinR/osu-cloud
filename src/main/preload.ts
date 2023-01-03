@@ -4,7 +4,8 @@ import { channel } from './ipc/channels';
 contextBridge.exposeInMainWorld('electron', {
     openExternal: (url: string) =>
         ipcRenderer.invoke(channel.openExternal, url),
-    selectFolder: () => ipcRenderer.invoke(channel.selectFolder),
+    showDialog: (type: 'openFile' | 'openDirectory') =>
+        ipcRenderer.invoke(channel.showDialog, type),
     getDevice: () => ipcRenderer.invoke(channel.getDevice),
     getSaveData: () => ipcRenderer.invoke(channel.getSaveData),
     checkGameFolder: () => ipcRenderer.invoke(channel.checkGameFolder),
