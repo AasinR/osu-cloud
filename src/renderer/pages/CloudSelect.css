@@ -1,0 +1,106 @@
+.cloud-center-panel {
+    width: 600px;
+    height: 240px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #202020;
+    border-radius: 20px;
+}
+
+.cloud-select-title {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.cloud-select-title-text {
+    font-size: 2rem;
+}
+.cloud-select-note {
+    font-size: 0.9rem;
+}
+
+.cloud-select-item {
+    width: 500px;
+    height: 40px;
+    display: block;
+    margin: 10px auto;
+}
+
+.cloud-select-error-message {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #8b0000;
+}
+
+.cloud-select-2element {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cloud-select-button {
+    outline: none;
+    background-color: #303030;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 5px;
+}
+.cloud-select-button:active {
+    background-color: #353535;
+}
+
+.cloud-select-button-small {
+    width: 30%;
+    height: 100%;
+}
+
+.cloud-select-file-text {
+    width: 80%;
+    height: 100%;
+    padding: 10px;
+    outline: none;
+    background-color: #353535;
+    color: #ffffff;
+
+    border: solid #303030;
+    border-radius: 5px 0 0 5px;
+}
+.cloud-select-file-text:focus {
+    outline: none;
+}
+
+.cloud-select-file-button {
+    width: 20%;
+    height: 100%;
+    border-radius: 0 5px 5px 0;
+}
+
+.cloud-select-info {
+    display: block;
+    text-align: center;
+}
+.cloud-select-info:is(:link, :visited) {
+    color: #003e3e;
+}
+.cloud-select-info:is(:hover, :active) {
+    color: #006565;
+}
+
+.cloud-select-api-input {
+    padding: 10px;
+    outline: none;
+    background-color: #353535;
+    color: #ffffff;
+
+    border: solid #303030;
+    border-radius: 5px;
+}
+.cloud-select-api-input:focus {
+    outline: none;
+}
