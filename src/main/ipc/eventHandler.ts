@@ -5,10 +5,12 @@ import {
     existsSaveFile,
     loadSaveFile,
     newSaveFile,
+    saveCredentials,
     writeSaveFile,
     writeSettings,
 } from '../utils/saveUtils';
 import { getSettings } from '../../shared/data/settings';
+import { isValidCredentials } from '../utils/cloudUtils';
 
 /**
  * Requests the loaded settings data.
@@ -141,6 +143,18 @@ export function checkGameFolder(): boolean {
         if (gamePath === null) return false;
         getSettings().GamePath = gamePath;
     }
+    writeSettings(getSettings());
+    return true;
+}
+
+export async function selectGoogleDrive(
+    event: Electron.IpcMainInvokeEvent,
+    filePath: string
+): Promise<boolean> {
+    const valid = await isValidCredentials(filePath);
+    if (!valid) return false;
+    saveCredentials(filePath);
+    getSettings().CloudServiceType = 'GoogleDrive';
     writeSettings(getSettings());
     return true;
 }

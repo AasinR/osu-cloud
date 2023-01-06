@@ -12,4 +12,6 @@ contextBridge.exposeInMainWorld('electron', {
     getSettings: () => ipcRenderer.invoke(channel.getSettings),
     setSettings: (key: string | SettingsData, value?: unknown) =>
         ipcRenderer.invoke(channel.setSettings, key, value),
+    selectGoogleDrive: (filePath: string) =>
+        ipcRenderer.invoke(channel.selectGoogleDrive, filePath),
 });

@@ -1,4 +1,4 @@
-import path from 'path';
+import { app } from 'electron';
 import {
     existsSync,
     mkdirSync,
@@ -11,7 +11,7 @@ import { getLocalBeatmaps } from './osuUtils';
 import { initSettings } from '../../shared/data/settings';
 
 // save data paths
-const DATA_PATH = `${path.resolve('./')}\\data`;
+const DATA_PATH = `${app.getAppPath()}\\data`;
 const SETTINGS_PATH = `${DATA_PATH}\\settings.json`;
 
 /**
@@ -29,6 +29,7 @@ export function createDataDir() {
 export function newSettingsFile() {
     const settingsData: SettingsData = {
         GamePath: '',
+        CloudServiceType: '',
     };
     const dataString = JSON.stringify(settingsData);
     writeFileSync(SETTINGS_PATH, dataString);
@@ -112,4 +113,12 @@ export function loadSaveFile(): SaveData {
     const file = locateFile(DATA_PATH, /^osu-save_/);
     const data = readFileSync(file).toString();
     return JSON.parse(data);
+}
+
+/**
+ * Copy the service account credentials file form the given path.
+ */
+export function saveCredentials(filePath: string) {
+    const data = readFileSync(filePath);
+    writeFileSync(`${DATA_PATH}\\credentials-key.json`, data);
 }

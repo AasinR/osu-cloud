@@ -8,6 +8,7 @@ declare global {
             checkGameFolder: () => Promise<boolean>;
             getSettings: () => Promise<SettingsData>;
             setSettings: (key: string | SettingsData, value?: unknown) => void;
+            selectGoogleDrive: (filePath: string) => Promise<boolean>;
         };
     }
 }

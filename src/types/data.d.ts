@@ -28,6 +28,7 @@ declare global {
 
     interface SettingsData {
         GamePath: string;
+        CloudServiceType: string;
         [key: string]: unknown;
     }
 }

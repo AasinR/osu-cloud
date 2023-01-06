@@ -1,20 +1,40 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import LoadingPage from './LoadingPage';
 import './CloudSelect.css';
 
 function CloudSelect() {
+    const [loading, setLoading] = useState<boolean>(true);
     const [selected, setSelected] = useState<number>(0);
     const [inputValue, setInputValue] = useState<string>('');
     const [valid, setValid] = useState<boolean>(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        (async () => {
+            setLoading(true);
+            const settingsData = await window.electron.getSettings();
+            if (settingsData.CloudServiceType) navigate('/beatmaps');
+            setLoading(false);
+        })();
+    }, [navigate]);
 
     const handleSelectFile = async () => {
+        setValid(true);
         const selectedPath = await window.electron.showDialog('openFile');
         setInputValue(selectedPath);
+    };
+
+    const handleSelectDrive = async () => {
+        const validFile = await window.electron.selectGoogleDrive(inputValue);
+        setValid(validFile);
+        if (validFile) navigate('/beatmaps');
     };
 
     const handleBack = () => {
         setSelected(0);
         setInputValue('');
+        setValid(true);
     };
 
     // select buttons
@@ -76,6 +96,7 @@ function CloudSelect() {
                 <button
                     className="cloud-select-button cloud-select-button-small"
                     type="button"
+                    onClick={handleSelectDrive}
                 >
                     Done
                 </button>
@@ -127,6 +148,7 @@ function CloudSelect() {
         return ServerSelect;
     };
 
+    if (loading) return <LoadingPage />;
     return (
         <div className="page">
             <div className="cloud-center-panel">

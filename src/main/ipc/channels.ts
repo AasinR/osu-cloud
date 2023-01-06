@@ -7,4 +7,5 @@ export const channel = {
     checkGameFolder: 'valid-game-folder',
     getSettings: 'get-settings-data',
     setSettings: 'set-settings-data',
+    selectGoogleDrive: 'select-cloud-google-drive',
 };

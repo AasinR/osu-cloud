@@ -13,7 +13,7 @@ function GameNotFound() {
         (async () => {
             setLoading(true);
             const validPath = await window.electron.checkGameFolder();
-            if (validPath) navigate('/beatmaps');
+            if (validPath) navigate('/cloud-select');
             setLoading(false);
         })();
     }, [navigate]);
@@ -24,7 +24,7 @@ function GameNotFound() {
         setPath(selectedPath);
         const validPath = await window.electron.checkGameFolder();
         setValid(validPath);
-        if (validPath) navigate('/beatmaps');
+        if (validPath) navigate('/cloud-select');
     };
 
     const handleDownloadClick = () => {

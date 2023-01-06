@@ -126,6 +126,7 @@ app.whenReady()
         ipcMain.handle(channel.checkGameFolder, events.checkGameFolder);
         ipcMain.handle(channel.getSettings, events.requestSettings);
         ipcMain.handle(channel.setSettings, events.setSettings);
+        ipcMain.handle(channel.selectGoogleDrive, events.selectGoogleDrive);
 
         createWindow();
         app.on('activate', () => {

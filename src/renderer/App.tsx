@@ -11,8 +11,8 @@ export default function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/a" element={<GameNotFound />} />
-                <Route path="/" element={<CloudSelect />} />
+                <Route path="/" element={<GameNotFound />} />
+                <Route path="/cloud-select" element={<CloudSelect />} />
                 <Route path="/beatmaps" element={<BeatmapsPage />} />
                 <Route path="/error" element={<ErrorPage />} />
             </Routes>
