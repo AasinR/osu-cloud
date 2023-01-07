@@ -1,25 +1,20 @@
-import { app } from 'electron';
-import {
-    existsSync,
-    mkdirSync,
-    writeFileSync,
-    readFileSync,
-    renameSync,
-} from 'fs';
-import { getDeviceInfo, locateFile } from './systemUtils';
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'fs';
+import { getDeviceInfo } from './systemUtils';
 import { getLocalBeatmaps } from './osuUtils';
-import { initSettings } from '../../shared/data/settings';
-
-// save data paths
-const DATA_PATH = `${app.getAppPath()}\\data`;
-const SETTINGS_PATH = `${DATA_PATH}\\settings.json`;
+import { initSettings } from '../data/settings';
+import {
+    CREDENTIALS_KEY,
+    DATA_FOLDER,
+    SAVE_FILE,
+    SETTINGS_FILE,
+} from '../data/paths';
 
 /**
  * Create the Data folder if it doesn't exist.
  */
 export function createDataDir() {
-    if (!existsSync(DATA_PATH)) {
-        mkdirSync(DATA_PATH);
+    if (!existsSync(DATA_FOLDER)) {
+        mkdirSync(DATA_FOLDER);
     }
 }
 
@@ -32,7 +27,7 @@ export function newSettingsFile() {
         CloudServiceType: '',
     };
     const dataString = JSON.stringify(settingsData);
-    writeFileSync(SETTINGS_PATH, dataString);
+    writeFileSync(SETTINGS_FILE, dataString);
 }
 
 /**
@@ -40,7 +35,7 @@ export function newSettingsFile() {
  */
 export function writeSettings(data: SettingsData) {
     const dataString = JSON.stringify(data);
-    writeFileSync(SETTINGS_PATH, dataString);
+    writeFileSync(SETTINGS_FILE, dataString);
     initSettings(data);
 }
 
@@ -48,21 +43,9 @@ export function writeSettings(data: SettingsData) {
  * Load data from the settings file into global variables.
  */
 export function loadSettings() {
-    if (!existsSync(SETTINGS_PATH)) newSettingsFile();
-    const settingsFile = readFileSync(SETTINGS_PATH).toString();
+    if (!existsSync(SETTINGS_FILE)) newSettingsFile();
+    const settingsFile = readFileSync(SETTINGS_FILE).toString();
     initSettings(JSON.parse(settingsFile));
-}
-
-/**
- * Checks if a save file exists or not.
- */
-export function existsSaveFile(): boolean {
-    try {
-        locateFile(DATA_PATH, /^osu-save_/);
-        return true;
-    } catch (error) {
-        return false;
-    }
 }
 
 /**
@@ -90,8 +73,7 @@ export async function newSaveFile(): Promise<SaveData> {
         beatmaps,
     };
     const saveString = JSON.stringify(newSave);
-    const fileName = `osu-save_${Date.now()}.json`;
-    writeFileSync(`${DATA_PATH}\\${fileName}`, saveString);
+    writeFileSync(SAVE_FILE, saveString);
     return newSave;
 }
 
@@ -99,19 +81,15 @@ export async function newSaveFile(): Promise<SaveData> {
  * Write data into the save file then rename it to update the timestamp.
  */
 export function writeSaveFile(data: SaveData) {
-    const filePath = locateFile(DATA_PATH, /^osu-save_/);
     const dataString = JSON.stringify(data);
-    writeFileSync(filePath, dataString);
-    const newPath = `${DATA_PATH}\\osu-save_${Date.now()}.json`;
-    renameSync(filePath, newPath);
+    writeFileSync(SAVE_FILE, dataString);
 }
 
 /**
  * Returns the save file in JSON format.
  */
 export function loadSaveFile(): SaveData {
-    const file = locateFile(DATA_PATH, /^osu-save_/);
-    const data = readFileSync(file).toString();
+    const data = readFileSync(SAVE_FILE).toString();
     return JSON.parse(data);
 }
 
@@ -120,5 +98,5 @@ export function loadSaveFile(): SaveData {
  */
 export function saveCredentials(filePath: string) {
     const data = readFileSync(filePath);
-    writeFileSync(`${DATA_PATH}\\credentials-key.json`, data);
+    writeFileSync(CREDENTIALS_KEY, data);
 }

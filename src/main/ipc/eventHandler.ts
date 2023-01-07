@@ -1,16 +1,17 @@
 import { shell, dialog } from 'electron';
+import { existsSync } from 'fs';
 import { getDeviceInfo, removeItem } from '../utils/systemUtils';
 import { findOsuFolder, getLocalBeatmaps, osuExists } from '../utils/osuUtils';
 import {
-    existsSaveFile,
     loadSaveFile,
     newSaveFile,
     saveCredentials,
     writeSaveFile,
     writeSettings,
 } from '../utils/saveUtils';
-import { getSettings } from '../../shared/data/settings';
+import { getSettings } from '../data/settings';
 import { isValidCredentials } from '../utils/cloudUtils';
+import { SAVE_FILE } from '../data/paths';
 
 /**
  * Requests the loaded settings data.
@@ -71,7 +72,7 @@ export function getDevice(): Promise<Device> {
  */
 export async function getSaveData(): Promise<SaveData> {
     // if the save file doesn't exist, create a new
-    if (!existsSaveFile()) return newSaveFile();
+    if (existsSync(SAVE_FILE)) return newSaveFile();
 
     const currentDevice: Device = await getDeviceInfo();
     const localData: LocalBeatmap[] = getLocalBeatmaps();

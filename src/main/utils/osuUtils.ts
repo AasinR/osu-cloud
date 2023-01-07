@@ -1,7 +1,7 @@
 import { homedir, platform } from 'os';
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { locateFile } from './systemUtils';
-import { getSettings } from '../../shared/data/settings';
+import { getSettings } from '../data/settings';
 
 /**
  * Tries to locate the osu! folder in the default locations.

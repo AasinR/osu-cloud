@@ -1,7 +1,7 @@
 import { GoogleAuth } from 'google-auth-library';
 import { google } from 'googleapis';
-import { app } from 'electron';
 import { createReadStream } from 'fs';
+import { CREDENTIALS_KEY } from '../data/paths';
 
 /**
  * Checks if the given file is a valid Google credentials file.
@@ -28,7 +28,7 @@ export async function isValidCredentials(
  */
 export function getDriveAuth() {
     const auth = new GoogleAuth({
-        keyFile: `${app.getAppPath()}\\data\\credentials-key.json`,
+        keyFile: CREDENTIALS_KEY,
         scopes: ['https://www.googleapis.com/auth/drive'],
     });
     return google.drive({
