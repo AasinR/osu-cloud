@@ -1,7 +1,5 @@
 import { GoogleAuth } from 'google-auth-library';
-import { google } from 'googleapis';
-import { createReadStream } from 'fs';
-import { CREDENTIALS_KEY } from '../data/paths';
+import { drive_v3 } from 'googleapis';
 
 /**
  * Checks if the given file is a valid Google credentials file.
@@ -24,30 +22,19 @@ export async function isValidCredentials(
 }
 
 /**
- * Returns the Google Drive auth.
+ * Locate the file with the given name in Google Drive.
  */
-export function getDriveAuth() {
-    const auth = new GoogleAuth({
-        keyFile: CREDENTIALS_KEY,
-        scopes: ['https://www.googleapis.com/auth/drive'],
+export async function findDriveFile(
+    drive: drive_v3.Drive,
+    name: string
+): Promise<drive_v3.Schema$File> {
+    const response = await drive.files.list({
+        q: `name='${name}'`,
+        fields: 'nextPageToken, files(id, name)',
     });
-    return google.drive({
-        version: 'v3',
-        auth,
-    });
-}
-
-export function uploadGoogleDriveData(savePath: string) {
-    // TODO: upload file to google drive
-    const fileMetadata = {
-        name: 'osu-save.json',
-    };
-    const media = {
-        mimeType: 'application/octet-stream',
-        body: createReadStream(savePath),
-    };
-}
-
-export function getGoogleDriveData() {
-    // TODO: get data from google drive
+    const { files } = response.data;
+    if (files === undefined || files.length === 0) {
+        throw new Error('File does not exists');
+    }
+    return files[0];
 }

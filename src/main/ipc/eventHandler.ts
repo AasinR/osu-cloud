@@ -72,7 +72,7 @@ export function getDevice(): Promise<Device> {
  */
 export async function getSaveData(): Promise<SaveData> {
     // if the save file doesn't exist, create a new
-    if (existsSync(SAVE_FILE)) return newSaveFile();
+    if (!existsSync(SAVE_FILE)) return newSaveFile();
 
     const currentDevice: Device = await getDeviceInfo();
     const localData: LocalBeatmap[] = getLocalBeatmaps();
