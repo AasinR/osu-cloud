@@ -5,13 +5,9 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './utils/util';
-import { createDataDir, loadSettings } from './utils/saveUtils';
 import { channel } from './ipc/channels';
 import * as events from './ipc/eventHandler';
-
-// create the data folder if it doesn't exist.
-createDataDir();
-loadSettings();
+import StartController from './controllers/StartController';
 
 class AppUpdater {
     constructor() {
@@ -52,6 +48,9 @@ const createWindow = async () => {
     if (isDebug) {
         await installExtensions();
     }
+
+    // initialize app data
+    await StartController.load();
 
     const RESOURCES_PATH = app.isPackaged
         ? path.join(process.resourcesPath, 'assets')
@@ -104,10 +103,6 @@ const createWindow = async () => {
     new AppUpdater();
 };
 
-/**
- * Add event listeners...
- */
-
 app.on('window-all-closed', () => {
     // Respect the OSX convention of having the application in memory even
     // after all windows have been closed
@@ -130,7 +125,7 @@ app.whenReady()
 
         createWindow();
         app.on('activate', () => {
-            // On macOS it's common to re-create a window in the app when the
+            // On macOS, it's common to re-create a window in the app when the
             // dock icon is clicked and there are no other windows open.
             if (mainWindow === null) createWindow();
         });

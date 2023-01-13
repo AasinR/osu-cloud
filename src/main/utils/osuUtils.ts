@@ -1,7 +1,7 @@
 import { homedir, platform } from 'os';
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { locateFile } from './systemUtils';
-import { getSettings } from '../data/settings';
+import SettingsController from '../controllers/SettingsController';
 
 /**
  * Tries to locate the osu! folder in the default locations.
@@ -72,7 +72,7 @@ export function getMetadata(dirPath: string): BeatmapMetadata {
  * Returns the local unique beatmaps.
  */
 export function getLocalBeatmaps(): LocalBeatmap[] {
-    const OSU_PATH = `${getSettings().GamePath}\\Songs`;
+    const OSU_PATH = `${SettingsController.settings.GamePath}\\Songs`;
 
     const folders: string[] = readdirSync(OSU_PATH);
     const beatmaps: LocalBeatmap[] = [];

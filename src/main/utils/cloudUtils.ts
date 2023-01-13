@@ -1,5 +1,7 @@
 import { GoogleAuth } from 'google-auth-library';
 import { drive_v3 } from 'googleapis';
+import { readFileSync, writeFileSync } from 'fs';
+import { CREDENTIALS_KEY } from '../data/paths';
 
 /**
  * Checks if the given file is a valid Google credentials file.
@@ -19,6 +21,14 @@ export async function isValidCredentials(
     } catch (error) {
         return false;
     }
+}
+
+/**
+ * Copy the service account credentials file form the given path.
+ */
+export function saveCredentials(filePath: string) {
+    const data = readFileSync(filePath);
+    writeFileSync(CREDENTIALS_KEY, data);
 }
 
 /**

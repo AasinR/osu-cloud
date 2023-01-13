@@ -1,41 +1,10 @@
 import { shell, dialog } from 'electron';
-import { existsSync } from 'fs';
-import { getDeviceInfo, removeItem } from '../utils/systemUtils';
-import { findOsuFolder, getLocalBeatmaps, osuExists } from '../utils/osuUtils';
-import {
-    loadSaveFile,
-    newSaveFile,
-    saveCredentials,
-    writeSaveFile,
-    writeSettings,
-} from '../utils/saveUtils';
-import { getSettings } from '../data/settings';
-import { isValidCredentials } from '../utils/cloudUtils';
-import { SAVE_FILE } from '../data/paths';
-
-/**
- * Requests the loaded settings data.
- */
-export function requestSettings(): SettingsData {
-    return getSettings();
-}
-
-/**
- * Sets the settings data.
- */
-export function setSettings(
-    event: Electron.IpcMainInvokeEvent,
-    key: string | SettingsData,
-    value?: unknown
-) {
-    if (typeof key === 'string') {
-        if (typeof value === 'undefined') {
-            throw new Error('A value must be provided with key');
-        }
-        getSettings()[key] = value;
-        writeSettings(getSettings());
-    } else writeSettings(key);
-}
+import { getDeviceInfo } from '../utils/systemUtils';
+import { findOsuFolder, osuExists } from '../utils/osuUtils';
+import { isValidCredentials, saveCredentials } from '../utils/cloudUtils';
+import SettingsController from '../controllers/SettingsController';
+import SaveFileController from '../controllers/SaveFileController';
+import StartController from '../controllers/StartController';
 
 /**
  * Opens the given url in the browser.
@@ -71,81 +40,51 @@ export function getDevice(): Promise<Device> {
  * Updates the save file data then returns it.
  */
 export async function getSaveData(): Promise<SaveData> {
-    // if the save file doesn't exist, create a new
-    if (!existsSync(SAVE_FILE)) return newSaveFile();
-
-    const currentDevice: Device = await getDeviceInfo();
-    const localData: LocalBeatmap[] = getLocalBeatmaps();
-    const saveData: SaveData = loadSaveFile();
-
-    // update device list
-    const foundDevice = saveData.devices.find(
-        (device: Device) => device.uuid === currentDevice.uuid
-    );
-    if (foundDevice) foundDevice.name = currentDevice.name;
-    else saveData.devices.push(currentDevice);
-
-    // sort devices by name
-    saveData.devices.sort((a, b) => {
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return 1;
-        return 0;
-    });
-
-    // update downloads info and remove redundant beatmaps
-    saveData.beatmaps.forEach((saved: Beatmap) => {
-        const downloaded: boolean = saved.downloaded.includes(
-            currentDevice.uuid
-        );
-        const found = localData.find(
-            (item: LocalBeatmap) => item.id === saved.id
-        );
-        if (!found && downloaded) {
-            removeItem(saved.downloaded, currentDevice.uuid);
-            if (!saved.downloaded.length) removeItem(saveData.beatmaps, saved);
-        }
-        if (found && !downloaded) {
-            saved.downloaded.push(currentDevice.uuid);
-        }
-    });
-
-    // add new beatmaps from local
-    localData.forEach((local: LocalBeatmap) => {
-        const found = saveData.beatmaps.find(
-            (item: Beatmap) => item.id === local.id
-        );
-        if (!found) {
-            saveData.beatmaps.push({
-                id: local.id,
-                metadata: local.metadata,
-                downloaded: [currentDevice.uuid],
-            });
-        }
-    });
-
-    // sort beatmap array by id
-    saveData.beatmaps.sort((a, b) => {
-        if (a.id < b.id) return -1;
-        if (a.id > b.id) return 1;
-        return 0;
-    });
-
-    // write data into the save file
-    writeSaveFile(saveData);
-    return saveData;
+    await StartController.load();
+    if (SaveFileController.saveData === null) {
+        throw new Error('Save data is not loaded');
+    }
+    return SaveFileController.saveData;
 }
 
 /**
  * Checks if the stored GamePath is valid. If not, tries to check the default locations.
  */
 export function checkGameFolder(): boolean {
-    if (!getSettings().GamePath || !osuExists(getSettings().GamePath)) {
+    if (
+        !SettingsController.settings.GamePath ||
+        !osuExists(SettingsController.settings.GamePath)
+    ) {
         const gamePath: string | null = findOsuFolder();
         if (gamePath === null) return false;
-        getSettings().GamePath = gamePath;
+        SettingsController.settings.GamePath = gamePath;
+        SettingsController.save();
     }
-    writeSettings(getSettings());
     return true;
+}
+
+/**
+ * Requests the loaded settings data.
+ */
+export function requestSettings(): SettingsData {
+    return SettingsController.settings;
+}
+
+/**
+ * Sets the settings data.
+ */
+export function setSettings(
+    event: Electron.IpcMainInvokeEvent,
+    key: string | SettingsData,
+    value?: unknown
+) {
+    if (typeof key === 'string') {
+        if (typeof value === 'undefined') {
+            throw new Error('A value must be provided with key');
+        }
+        SettingsController.settings[key] = value;
+    } else SettingsController.settings = key;
+    SettingsController.save();
 }
 
 export async function selectGoogleDrive(
@@ -155,7 +94,8 @@ export async function selectGoogleDrive(
     const valid = await isValidCredentials(filePath);
     if (!valid) return false;
     saveCredentials(filePath);
-    getSettings().CloudServiceType = 'GoogleDrive';
-    writeSettings(getSettings());
+    SettingsController.settings.CloudServiceType = 'GoogleDrive';
+    SettingsController.save();
+    StartController.selectCloudController();
     return true;
 }
