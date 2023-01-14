@@ -40,10 +40,10 @@ export function getDevice(): Promise<Device> {
  * Updates the save file data then returns it.
  */
 export async function getSaveData(): Promise<SaveData> {
-    await StartController.load();
     if (SaveFileController.saveData === null) {
         throw new Error('Save data is not loaded');
     }
+    await SaveFileController.update();
     return SaveFileController.saveData;
 }
 
@@ -87,6 +87,9 @@ export function setSettings(
     SettingsController.save();
 }
 
+/**
+ * Set cloud save service to Google Drive.
+ */
 export async function selectGoogleDrive(
     event: Electron.IpcMainInvokeEvent,
     filePath: string
@@ -97,5 +100,6 @@ export async function selectGoogleDrive(
     SettingsController.settings.CloudServiceType = 'GoogleDrive';
     SettingsController.save();
     StartController.selectCloudController();
+    await StartController.load();
     return true;
 }

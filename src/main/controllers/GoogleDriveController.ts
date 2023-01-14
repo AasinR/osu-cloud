@@ -32,7 +32,12 @@ export class GoogleDriveController implements ICloudController {
                 }
             );
             const destination = createWriteStream(SAVE_FILE);
+            const fileCreation = new Promise((resolve, reject) => {
+                destination.on('finish', resolve);
+                destination.on('error', reject);
+            });
             dataStream.data.pipe(destination);
+            await fileCreation;
             return true;
         } catch (error) {
             return false;
