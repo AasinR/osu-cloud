@@ -2,6 +2,10 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
+:root {
+    --nav-height: 40px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,5 +21,5 @@ body {
 .page {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: calc(100% - var(--nav-height));
 }

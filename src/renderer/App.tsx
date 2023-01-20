@@ -5,11 +5,13 @@ import {
     ErrorPage,
     CloudSelect,
 } from 'renderer/pages';
+import { Navbar } from './components';
 import './App.css';
 
 export default function App() {
     return (
         <Router>
+            <Navbar />
             <Routes>
                 <Route path="/" element={<GameNotFound />} />
                 <Route path="/cloud-select" element={<CloudSelect />} />
