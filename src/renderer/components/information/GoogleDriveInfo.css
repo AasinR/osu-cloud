@@ -1,0 +1,58 @@
+.information-component {
+    height: 100%;
+    padding: 10px 20px;
+    overflow: auto;
+    background-color: #202020;
+}
+.information-component::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.information-component::-webkit-scrollbar-track {
+    background: transparent;
+}
+.information-component::-webkit-scrollbar-thumb {
+    background-color: #666666;
+}
+
+.information-component h1 {
+    margin-bottom: 2rem;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.information-component h2 {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2em;
+}
+
+.information-component p {
+    margin-bottom: 1rem;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.information-component ul {
+    margin-left: 3rem;
+    margin-bottom: 2rem;
+}
+
+.information-component li {
+    margin-bottom: 1rem;
+}
+
+.information-external-link {
+    font-size: inherit;
+    font-weight: normal;
+    text-decoration: underline;
+    background-color: inherit;
+    color: #006565;
+    border: none;
+}
+.information-external-link:focus {
+    outline: none;
+}
+.information-external-link:is(:hover, :active) {
+    color: #008080;
+}

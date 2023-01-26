@@ -37,7 +37,7 @@ function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <Link className="nav-menu-link" to="/beatmaps">
+                        <Link className="nav-menu-link" to="/information">
                             Information
                         </Link>
                     </li>
