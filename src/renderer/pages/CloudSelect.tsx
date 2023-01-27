@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import LoadingPage from './LoadingPage';
+import { PopupWindow } from '../components/utils';
+import { GoogleDriveInfo } from '../components/information';
 import './CloudSelect.css';
 
 function CloudSelect() {
@@ -8,6 +10,7 @@ function CloudSelect() {
     const [selected, setSelected] = useState<number>(0);
     const [inputValue, setInputValue] = useState<string>('');
     const [valid, setValid] = useState<boolean>(true);
+    const [showPopup, setShowPopup] = useState<boolean>(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,8 +29,10 @@ function CloudSelect() {
     };
 
     const handleSelectDrive = async () => {
+        setLoading(true);
         const validFile = await window.electron.selectGoogleDrive(inputValue);
         setValid(validFile);
+        setLoading(false);
         if (validFile) navigate('/beatmaps');
     };
 
@@ -35,6 +40,10 @@ function CloudSelect() {
         setSelected(0);
         setInputValue('');
         setValid(true);
+    };
+
+    const handlePopup = () => {
+        setShowPopup(false);
     };
 
     // select buttons
@@ -101,9 +110,13 @@ function CloudSelect() {
                     Done
                 </button>
             </div>
-            <Link className="cloud-select-info" to="/">
+            <button
+                type="button"
+                className="cloud-select-info information-external-link"
+                onClick={() => setShowPopup(true)}
+            >
                 What&apos;s a service account?
-            </Link>
+            </button>
         </div>
     );
 
@@ -130,9 +143,13 @@ function CloudSelect() {
                     Done
                 </button>
             </div>
-            <Link className="cloud-select-info" to="/">
+            <button
+                type="button"
+                className="cloud-select-info information-external-link"
+                onClick={() => setShowPopup(true)}
+            >
                 Information about the API
-            </Link>
+            </button>
         </div>
     );
 
@@ -148,9 +165,26 @@ function CloudSelect() {
         return ServerSelect;
     };
 
+    const displayPopup = () => {
+        if (selected === 1)
+            return (
+                <PopupWindow onClose={handlePopup}>
+                    <GoogleDriveInfo />
+                </PopupWindow>
+            );
+        if (selected === 2)
+            return (
+                <PopupWindow onClose={handlePopup}>
+                    <p>Sample Text</p>
+                </PopupWindow>
+            );
+        return null;
+    };
+
     if (loading) return <LoadingPage />;
     return (
         <div className="page">
+            {showPopup ? displayPopup() : null}
             <div className="cloud-center-panel">
                 <div className="cloud-select-title">
                     <p className="cloud-select-title-text">{pageTitle()}</p>

@@ -82,14 +82,9 @@
 }
 
 .cloud-select-info {
-    display: block;
-    text-align: center;
-}
-.cloud-select-info:is(:link, :visited) {
-    color: #003e3e;
-}
-.cloud-select-info:is(:hover, :active) {
-    color: #006565;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .cloud-select-api-input {
