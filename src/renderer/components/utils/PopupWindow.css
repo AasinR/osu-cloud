@@ -1,0 +1,28 @@
+.popup {
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+
+    background-color: #00000099;
+    border: solid #ffffff;
+}
+
+.popup-close {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 0;
+    transform: translate(25%, -25%);
+
+    background-color: #202020;
+    color: #ffffff;
+    border-radius: 50%;
+    border: solid #ffffff;
+}
+.popup-close:focus {
+    outline: none;
+}
