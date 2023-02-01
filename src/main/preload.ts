@@ -2,6 +2,18 @@ import { contextBridge, ipcRenderer } from 'electron';
 import { channel } from './ipc/channels';
 
 const electronHandler = {
+    controls: {
+        close() {
+            ipcRenderer.send(channel.closeApp);
+        },
+        maximize() {
+            ipcRenderer.send(channel.maximizeApp);
+        },
+        minimize() {
+            ipcRenderer.send(channel.minimizeApp);
+        },
+    },
+
     openExternal(url: string) {
         ipcRenderer.invoke(channel.openExternal, url);
     },

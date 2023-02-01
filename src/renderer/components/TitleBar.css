@@ -1,0 +1,90 @@
+.title-bar {
+    height: var(--nav-height);
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    z-index: 200;
+    background-color: #202020;
+    border-bottom: solid 1px #808080;
+}
+
+.title-bar-select {
+    display: flex;
+    align-items: center;
+}
+
+.title-bar-drag {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    -webkit-app-region: drag;
+}
+
+.title-bar-drag p {
+    margin-left: 0.5rem;
+    line-height: 100%;
+}
+
+.title-bar-select button {
+    height: 100%;
+    width: 40px;
+    margin-left: 0.5rem;
+    padding: 4px;
+    outline: none;
+
+    border: none;
+    background-color: inherit;
+}
+.title-bar-select button:hover {
+    background: #353535;
+}
+
+.title-bar-select img {
+    width: 100%;
+    height: 100%;
+}
+
+.title-bar-dropdown {
+    width: 200px;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+
+    background-color: #202020;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+}
+
+.title-bar-dropdown-link {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+}
+.title-bar-dropdown-link:hover {
+    background-color: #353535;
+}
+
+.title-bar-control {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.title-bar-control-button {
+    height: 100%;
+    width: 40px;
+    background-color: inherit;
+    color: #ffffff;
+    border: none;
+}
+.title-bar-control-button:focus {
+    outline: none;
+}
+.title-bar-control-button:hover {
+    background-color: #353535;
+}
+
+.title-bar-close:hover {
+    background-color: #8b0000;
+}

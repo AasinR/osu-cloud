@@ -3,7 +3,6 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import MenuBuilder from './menu';
 import { resolveHtmlPath } from './utils/util';
 import { channel } from './ipc/channels';
 import * as events from './ipc/eventHandler';
@@ -64,12 +63,27 @@ const createWindow = async () => {
         show: false,
         width: 1024,
         height: 728,
+        minWidth: 1024,
+        minHeight: 728,
+        frame: false,
         icon: getAssetPath('icon.png'),
         webPreferences: {
             preload: app.isPackaged
                 ? path.join(__dirname, 'preload.js')
                 : path.join(__dirname, '../../.erb/dll/preload.js'),
         },
+    });
+
+    // control events
+    ipcMain.on(channel.closeApp, () => {
+        mainWindow?.close();
+    });
+    ipcMain.on(channel.maximizeApp, () => {
+        if (mainWindow?.isMaximized()) mainWindow?.restore();
+        else mainWindow?.maximize();
+    });
+    ipcMain.on(channel.minimizeApp, () => {
+        mainWindow?.minimize();
     });
 
     mainWindow.loadURL(resolveHtmlPath('index.html'));
@@ -88,9 +102,6 @@ const createWindow = async () => {
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
-
-    const menuBuilder = new MenuBuilder(mainWindow);
-    menuBuilder.buildMenu();
 
     // Open urls in the user's browser
     mainWindow.webContents.setWindowOpenHandler((edata) => {

@@ -6,18 +6,18 @@ import {
     CloudSelect,
     InformationPage,
 } from 'renderer/pages';
-import { Navbar } from './components';
+import { TitleBar } from './components';
 import './App.css';
 
 export default function App() {
     return (
         <Router>
-            <Navbar />
+            <TitleBar />
             <Routes>
                 <Route path="/" element={<GameNotFound />} />
                 <Route path="/cloud-select" element={<CloudSelect />} />
                 <Route path="/beatmaps" element={<BeatmapsPage />} />
-                <Route path="/information" element={<InformationPage />} />
+                <Route path="/about" element={<InformationPage />} />
                 <Route path="/error" element={<ErrorPage />} />
             </Routes>
         </Router>
