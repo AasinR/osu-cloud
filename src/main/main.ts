@@ -3,10 +3,11 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import { resolveHtmlPath } from './utils/util';
+import { getAssetPath, resolveHtmlPath } from './utils/util';
 import { channel } from './ipc/channels';
 import * as events from './ipc/eventHandler';
 import StartController from './controllers/StartController';
+import TrayBuilder from './tray';
 
 class AppUpdater {
     constructor() {
@@ -51,14 +52,6 @@ const createWindow = async () => {
     // initialize app data
     await StartController.load();
 
-    const RESOURCES_PATH = app.isPackaged
-        ? path.join(process.resourcesPath, 'assets')
-        : path.join(__dirname, '../../assets');
-
-    const getAssetPath = (...paths: string[]): string => {
-        return path.join(RESOURCES_PATH, ...paths);
-    };
-
     mainWindow = new BrowserWindow({
         show: false,
         width: 1024,
@@ -76,7 +69,7 @@ const createWindow = async () => {
 
     // control events
     ipcMain.on(channel.closeApp, () => {
-        mainWindow?.close();
+        mainWindow?.hide();
     });
     ipcMain.on(channel.maximizeApp, () => {
         if (mainWindow?.isMaximized()) mainWindow?.restore();
@@ -102,6 +95,9 @@ const createWindow = async () => {
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
+
+    // eslint-disable-next-line no-new
+    new TrayBuilder(mainWindow);
 
     // Open urls in the user's browser
     mainWindow.webContents.setWindowOpenHandler((edata) => {
