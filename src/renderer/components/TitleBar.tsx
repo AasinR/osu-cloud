@@ -1,57 +1,65 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import HamburgerIcon from '../../../assets/icons/hamburger-menu.png';
 import './TitleBar.css';
 
 function TitleBar() {
+    const [active, setActive] = useState<boolean>(false);
+    const location = useLocation();
+
     const dropdown = [
-        { title: 'Beatmaps', src: '/beatmaps' },
-        { title: 'Settings', src: '/settings' },
-        { title: 'About', src: '/about' },
+        { title: 'Beatmaps', url: '/beatmaps' },
+        { title: 'Settings', url: '/settings' },
+        { title: 'About', url: '/about' },
     ];
 
-    const [active, setActive] = useState<boolean>(false);
-    const [selected, setSelected] = useState<string>(dropdown[0].title);
+    function checkUrl() {
+        return (
+            dropdown.find((item) => item.url === location.pathname)?.title ??
+            'osu!Cloud'
+        );
+    }
 
     return (
         <div className="title-bar">
-            <div className="title-bar-select">
-                <button
-                    className="title-bar-menu-button"
-                    type="button"
-                    onClick={() => setActive(!active)}
-                    onBlur={(event) => {
-                        if (
-                            !event.relatedTarget?.classList.contains(
-                                'title-bar-dropdown-link'
-                            )
-                        ) {
-                            setActive(false);
-                        }
-                    }}
-                >
-                    <img alt="-" src={HamburgerIcon} />
-                </button>
-                {active ? (
-                    <div className="title-bar-dropdown">
-                        {dropdown.map((page) => (
-                            <Link
-                                className="title-bar-dropdown-link"
-                                key={page.title}
-                                to={page.src}
-                                onClick={() => {
-                                    setSelected(page.title);
-                                    setActive(false);
-                                }}
-                            >
-                                {page.title}
-                            </Link>
-                        ))}
-                    </div>
-                ) : null}
-            </div>
+            {checkUrl() !== 'osu!Cloud' ? (
+                <div className="title-bar-select">
+                    <button
+                        className="title-bar-menu-button"
+                        type="button"
+                        onClick={() => setActive(!active)}
+                        onBlur={(event) => {
+                            if (
+                                !event.relatedTarget?.classList.contains(
+                                    'title-bar-dropdown-link'
+                                )
+                            ) {
+                                setActive(false);
+                            }
+                        }}
+                    >
+                        <img alt="-" src={HamburgerIcon} />
+                    </button>
+                    {active ? (
+                        <div className="title-bar-dropdown">
+                            {dropdown.map((page) => (
+                                <Link
+                                    className="title-bar-dropdown-link"
+                                    key={page.title}
+                                    to={page.url}
+                                    onClick={() => {
+                                        setActive(false);
+                                    }}
+                                >
+                                    {page.title}
+                                </Link>
+                            ))}
+                        </div>
+                    ) : null}
+                </div>
+            ) : null}
             <div className="title-bar-drag">
-                <p>{selected}</p>
+                <p>{checkUrl()}</p>
             </div>
             <div className="title-bar-control">
                 <button

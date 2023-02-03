@@ -4,6 +4,7 @@ import {
     GameNotFound,
     ErrorPage,
     CloudSelect,
+    SettingsPage,
     InformationPage,
 } from 'renderer/pages';
 import { TitleBar } from './components';
@@ -17,6 +18,7 @@ export default function App() {
                 <Route path="/" element={<GameNotFound />} />
                 <Route path="/cloud-select" element={<CloudSelect />} />
                 <Route path="/beatmaps" element={<BeatmapsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/about" element={<InformationPage />} />
                 <Route path="/error" element={<ErrorPage />} />
             </Routes>

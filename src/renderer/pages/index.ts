@@ -1,4 +1,5 @@
 export { default as BeatmapsPage } from './BeatmapsPage';
+export { default as SettingsPage } from './SettingsPage';
 export { default as InformationPage } from './InformationPage';
 export { default as GameNotFound } from './GameNotFound';
 export { default as CloudSelect } from './CloudSelect';

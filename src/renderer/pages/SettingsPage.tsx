@@ -1,16 +1,23 @@
 import { useState } from 'react';
-import { GoogleDriveInfo } from '../components/information';
+import { CloudServiceSelect } from '../components/settings';
 import { SideNavigation } from '../components/utils';
 
-function InformationPage() {
+function SettingsPage() {
     const [selected, setSelected] = useState<number>(0);
 
     const selectOptions = [
         {
-            title: 'Cloud services',
+            title: 'Application',
             options: [
-                { name: 'Google Drive Service Account', value: 0 },
-                { name: 'Personal Server API', value: 1 },
+                { name: 'Launch Options', value: 0 },
+                { name: 'Cloud Service', value: 1 },
+            ],
+        },
+        {
+            title: 'Save Data',
+            options: [
+                { name: 'Save File', value: 2 },
+                { name: 'Modify Data', value: 3 },
             ],
         },
     ];
@@ -19,8 +26,8 @@ function InformationPage() {
 
     const selectDisplay = () => {
         switch (selected) {
-            case 0:
-                return <GoogleDriveInfo />;
+            case 1:
+                return <CloudServiceSelect />;
             default:
                 return SampleText;
         }
@@ -38,4 +45,4 @@ function InformationPage() {
     );
 }
 
-export default InformationPage;
+export default SettingsPage;

@@ -1,0 +1,67 @@
+.cloud-service-select {
+    width: 100%;
+    height: 100%;
+    background-color: #202020;
+}
+
+.cloud-service-type {
+    padding: 1rem;
+    border-bottom: 1px solid #808080;
+}
+
+.cloud-service-type div {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: left;
+    gap: 2rem;
+}
+
+.cloud-service-type label {
+    height: 30px;
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    line-height: 100%;
+
+    background-color: #353535;
+    border: 1px solid #808080;
+}
+
+.cloud-service-type input[type='radio'] {
+    height: 100%;
+    width: 30px;
+    margin-left: 0.5rem;
+    border-left: 1px solid #808080;
+    -webkit-appearance: none;
+}
+.cloud-service-type input[type='radio']:checked {
+    background: #006565;
+}
+.cloud-service-type input[type='radio']:focus {
+    outline: none;
+}
+
+.cloud-service-settings {
+    padding: 1rem;
+    border-bottom: 1px solid #808080;
+}
+
+.cloud-service-apply {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cloud-service-apply button {
+    padding: 0.5rem;
+    background-color: #353535;
+    color: #ffffff;
+    border: 1px solid #808080;
+    border-radius: 8px;
+}
+.cloud-service-apply button:hover {
+    background-color: #404040;
+}
+.cloud-service-apply button:focus {
+    outline: none;
+}
