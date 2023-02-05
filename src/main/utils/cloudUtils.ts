@@ -32,6 +32,18 @@ export function saveCredentials(filePath: string) {
 }
 
 /**
+ * Returns the given credentials key's Private ID and Project ID.
+ */
+export function getCredentialsData(filePath: string): CredentialsData {
+    const data = readFileSync(filePath).toString();
+    const credentials = JSON.parse(data);
+    return {
+        project_id: credentials.project_id,
+        private_key_id: credentials.private_key_id,
+    };
+}
+
+/**
  * Locate the file with the given name in Google Drive.
  */
 export async function findDriveFile(

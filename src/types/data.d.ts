@@ -31,6 +31,11 @@ declare global {
         CloudServiceType: string;
         [key: string]: unknown;
     }
+
+    interface CredentialsData {
+        project_id: string;
+        private_key_id: string;
+    }
 }
 
 export {};

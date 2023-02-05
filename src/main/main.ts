@@ -129,6 +129,7 @@ app.whenReady()
         ipcMain.handle(channel.getSettings, events.requestSettings);
         ipcMain.handle(channel.setSettings, events.setSettings);
         ipcMain.handle(channel.selectGoogleDrive, events.selectGoogleDrive);
+        ipcMain.handle(channel.getCredentialsData, events.getCredentials);
 
         createWindow();
         app.on('activate', () => {

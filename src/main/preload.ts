@@ -14,6 +14,12 @@ const electronHandler = {
         },
     },
 
+    cloud: {
+        getCredentials(filePath?: string): Promise<CredentialsData | null> {
+            return ipcRenderer.invoke(channel.getCredentialsData, filePath);
+        },
+    },
+
     openExternal(url: string) {
         ipcRenderer.invoke(channel.openExternal, url);
     },

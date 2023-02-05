@@ -46,6 +46,36 @@
     border-bottom: 1px solid #808080;
 }
 
+.cloud-service-credentials-data {
+    margin-bottom: 1rem;
+}
+
+.cloud-service-credentials-data p {
+    margin-bottom: 0.5rem;
+}
+
+.cloud-service-file-select {
+    height: 35px;
+    width: 400px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    border: 1px solid #808080;
+}
+
+.cloud-service-file-select input {
+    width: 100%;
+    height: 100%;
+}
+
+.cloud-service-file-select button {
+    height: 100%;
+    width: 120px;
+    border: none;
+    border-left: 1px solid #808080;
+}
+
 .cloud-service-apply {
     padding: 1rem;
     display: flex;
@@ -54,14 +84,34 @@
 
 .cloud-service-apply button {
     padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.cloud-service-button {
     background-color: #353535;
     color: #ffffff;
     border: 1px solid #808080;
-    border-radius: 8px;
 }
-.cloud-service-apply button:hover {
+.cloud-service-button:hover {
     background-color: #404040;
 }
-.cloud-service-apply button:focus {
+.cloud-service-button:focus {
     outline: none;
+}
+
+.cloud-service-input {
+    padding: 10px;
+    background-color: #404040;
+    color: #ffffff;
+    border: none;
+}
+.cloud-service-input:focus {
+    outline: none;
+}
+
+.cloud-service-message-valid {
+    color: #0d7700;
+}
+.cloud-service-message-invalid {
+    color: #8b0000;
 }

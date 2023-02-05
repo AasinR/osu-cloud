@@ -7,7 +7,7 @@ function PopupWindow({
 }: {
     className?: string;
     onClose: () => void;
-    children: JSX.Element;
+    children?: JSX.Element | null;
 }) {
     return (
         <div className="popup">
@@ -25,6 +25,7 @@ function PopupWindow({
 
 PopupWindow.defaultProps = {
     className: '',
+    children: null,
 };
 
 export default PopupWindow;

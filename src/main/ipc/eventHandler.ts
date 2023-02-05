@@ -1,10 +1,15 @@
 import { shell, dialog } from 'electron';
 import { getDeviceInfo } from '../utils/systemUtils';
 import { findOsuFolder, osuExists } from '../utils/osuUtils';
-import { isValidCredentials, saveCredentials } from '../utils/cloudUtils';
+import {
+    getCredentialsData,
+    isValidCredentials,
+    saveCredentials,
+} from '../utils/cloudUtils';
 import SettingsController from '../controllers/SettingsController';
 import SaveFileController from '../controllers/SaveFileController';
 import StartController from '../controllers/StartController';
+import { CREDENTIALS_KEY } from '../data/paths';
 
 /**
  * Opens the given url in the browser.
@@ -102,4 +107,16 @@ export async function selectGoogleDrive(
     StartController.selectCloudController();
     await StartController.load();
     return true;
+}
+
+/**
+ * Checks if the credentials key is valid, if yes, returns data about it.
+ */
+export async function getCredentials(
+    event: Electron.IpcMainInvokeEvent,
+    filePath?: string
+): Promise<CredentialsData | null> {
+    const valid = await isValidCredentials(filePath || CREDENTIALS_KEY);
+    if (!valid) return null;
+    return getCredentialsData(filePath || CREDENTIALS_KEY);
 }
