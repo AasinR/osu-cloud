@@ -9,9 +9,10 @@ export const channel = {
     getDevice: 'device-information',
     getSaveData: 'request-save-data',
     checkGameFolder: 'valid-game-folder',
+
     getSettings: 'get-settings-data',
     setSettings: 'set-settings-data',
 
-    selectGoogleDrive: 'select-cloud-google-drive',
-    getCredentialsData: 'credentials-data:get',
+    saveCloudService: 'cloud-service:save',
+    getCredentialsData: 'cloud-service:get-credentials-data',
 };

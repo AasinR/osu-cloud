@@ -79,7 +79,7 @@ export function requestSettings(): SettingsData {
  * Sets the settings data.
  */
 export function setSettings(
-    event: Electron.IpcMainInvokeEvent,
+    event: Electron.IpcMainEvent,
     key: string | SettingsData,
     value?: unknown
 ) {
@@ -93,23 +93,6 @@ export function setSettings(
 }
 
 /**
- * Set cloud save service to Google Drive.
- */
-export async function selectGoogleDrive(
-    event: Electron.IpcMainInvokeEvent,
-    filePath: string
-): Promise<boolean> {
-    const valid = await isValidCredentials(filePath);
-    if (!valid) return false;
-    saveCredentials(filePath);
-    SettingsController.settings.CloudServiceType = 'GoogleDrive';
-    SettingsController.save();
-    StartController.selectCloudController();
-    await StartController.load();
-    return true;
-}
-
-/**
  * Checks if the credentials key is valid, if yes, returns data about it.
  */
 export async function getCredentials(
@@ -119,4 +102,27 @@ export async function getCredentials(
     const valid = await isValidCredentials(filePath || CREDENTIALS_KEY);
     if (!valid) return null;
     return getCredentialsData(filePath || CREDENTIALS_KEY);
+}
+
+export async function saveCloudService(
+    event: Electron.IpcMainInvokeEvent,
+    serviceType: string,
+    data?: string
+): Promise<boolean> {
+    try {
+        switch (serviceType) {
+            case 'GoogleDrive':
+                if (data) saveCredentials(data);
+                break;
+            default:
+                return false;
+        }
+        SettingsController.settings.CloudServiceType = serviceType;
+        SettingsController.save();
+        StartController.selectCloudController();
+        await StartController.load();
+        return true;
+    } catch (error) {
+        return false;
+    }
 }

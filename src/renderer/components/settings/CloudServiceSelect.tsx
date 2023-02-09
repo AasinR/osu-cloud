@@ -11,6 +11,9 @@ function CloudServiceSelect() {
 
     useEffect(() => {
         (async () => {
+            const savedType = (await window.electron.settings.get())
+                .CloudServiceType;
+            if (savedType) setSelected(savedType);
             const credData = await window.electron.cloud.getCredentials();
             if (credData) setCredentials(credData);
         })();
@@ -29,6 +32,22 @@ function CloudServiceSelect() {
             selectedPath
         );
         setCredentials(credData);
+    };
+
+    const handleSave = async () => {
+        if (credentials && inputValue) {
+            await window.electron.cloud.saveService(selected, inputValue);
+            setInputValue('');
+        }
+    };
+
+    const handleCancel = async () => {
+        const savedType = (await window.electron.settings.get())
+            .CloudServiceType;
+        if (savedType) setSelected(savedType);
+        const credData = await window.electron.cloud.getCredentials();
+        if (credData) setCredentials(credData);
+        setInputValue('');
     };
 
     const displayPopup = () => {
@@ -63,16 +82,6 @@ function CloudServiceSelect() {
                             onChange={handleTypeChange}
                         />
                     </label>
-                    <label htmlFor="Server">
-                        Server
-                        <input
-                            id="Server"
-                            type="radio"
-                            name="service-type"
-                            value="Server"
-                            onChange={handleTypeChange}
-                        />
-                    </label>
                 </div>
             </div>
             {selected === 'GoogleDrive' ? (
@@ -81,25 +90,39 @@ function CloudServiceSelect() {
                         <p>
                             Project ID:{' '}
                             <span
-                                className={`cloud-service-message-${
-                                    credentials ? 'valid' : 'invalid'
-                                }`}
+                                className={
+                                    inputValue
+                                        ? `cloud-service-message-${
+                                              credentials ? 'valid' : 'invalid'
+                                          }`
+                                        : ''
+                                }
                             >
+                                {/* eslint-disable-next-line no-nested-ternary */}
                                 {credentials
                                     ? credentials.project_id
-                                    : 'Invalid credentials file!'}
+                                    : inputValue
+                                    ? 'Invalid credentials file!'
+                                    : ''}
                             </span>
                         </p>
                         <p>
                             Service account ID:{' '}
                             <span
-                                className={`cloud-service-message-${
-                                    credentials ? 'valid' : 'invalid'
-                                }`}
+                                className={
+                                    inputValue
+                                        ? `cloud-service-message-${
+                                              credentials ? 'valid' : 'invalid'
+                                          }`
+                                        : ''
+                                }
                             >
+                                {/* eslint-disable-next-line no-nested-ternary */}
                                 {credentials
                                     ? credentials.private_key_id
-                                    : 'Invalid credentials file!'}
+                                    : inputValue
+                                    ? 'Invalid credentials file!'
+                                    : ''}
                             </span>
                         </p>
                     </div>
@@ -127,14 +150,20 @@ function CloudServiceSelect() {
                         What is a service account?
                     </button>
                 </div>
-            ) : (
-                <div className="cloud-service-settings">Coming not so soon</div>
-            )}
+            ) : null}
             <div className="cloud-service-apply">
-                <button type="button" className="cloud-service-button">
+                <button
+                    type="button"
+                    className="cloud-service-button"
+                    onClick={handleCancel}
+                >
                     Cancel Changes
                 </button>
-                <button type="button" className="cloud-service-button">
+                <button
+                    type="button"
+                    className="cloud-service-button"
+                    onClick={handleSave}
+                >
                     Save Settings
                 </button>
             </div>

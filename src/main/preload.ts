@@ -15,8 +15,24 @@ const electronHandler = {
     },
 
     cloud: {
+        saveService(serviceType: string, data?: string): Promise<boolean> {
+            return ipcRenderer.invoke(
+                channel.saveCloudService,
+                serviceType,
+                data
+            );
+        },
         getCredentials(filePath?: string): Promise<CredentialsData | null> {
             return ipcRenderer.invoke(channel.getCredentialsData, filePath);
+        },
+    },
+
+    settings: {
+        get(): Promise<SettingsData> {
+            return ipcRenderer.invoke(channel.getSettings);
+        },
+        set(key: string | SettingsData, value?: unknown) {
+            ipcRenderer.send(channel.setSettings, key, value);
         },
     },
 
@@ -34,15 +50,6 @@ const electronHandler = {
     },
     checkGameFolder(): Promise<boolean> {
         return ipcRenderer.invoke(channel.checkGameFolder);
-    },
-    getSettings(): Promise<SettingsData> {
-        return ipcRenderer.invoke(channel.getSettings);
-    },
-    setSettings(key: string | SettingsData, value?: unknown) {
-        ipcRenderer.invoke(channel.setSettings, key, value);
-    },
-    selectGoogleDrive(filePath: string): Promise<boolean> {
-        return ipcRenderer.invoke(channel.selectGoogleDrive, filePath);
     },
 };
 

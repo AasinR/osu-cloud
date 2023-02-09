@@ -16,7 +16,7 @@ function CloudSelect() {
     useEffect(() => {
         (async () => {
             setLoading(true);
-            const settingsData = await window.electron.getSettings();
+            const settingsData = await window.electron.settings.get();
             if (settingsData.CloudServiceType) navigate('/beatmaps');
             setLoading(false);
         })();
@@ -26,14 +26,19 @@ function CloudSelect() {
         setValid(true);
         const selectedPath = await window.electron.showDialog('openFile');
         setInputValue(selectedPath);
+        const validFile = await window.electron.cloud.getCredentials(
+            selectedPath
+        );
+        setValid(!!validFile);
     };
 
     const handleSelectDrive = async () => {
         setLoading(true);
-        const validFile = await window.electron.selectGoogleDrive(inputValue);
-        setValid(validFile);
+        if (valid) {
+            await window.electron.cloud.saveService('GoogleDrive', inputValue);
+            navigate('/beatmaps');
+        }
         setLoading(false);
-        if (validFile) navigate('/beatmaps');
     };
 
     const handleBack = () => {

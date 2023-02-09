@@ -20,7 +20,7 @@ function GameNotFound() {
 
     const handleSelectFolder = async () => {
         const selectedPath = await window.electron.showDialog('openDirectory');
-        await window.electron.setSettings('GamePath', selectedPath);
+        await window.electron.settings.set('GamePath', selectedPath);
         setPath(selectedPath);
         const validPath = await window.electron.checkGameFolder();
         setValid(validPath);

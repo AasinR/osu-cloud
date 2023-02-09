@@ -126,9 +126,11 @@ app.whenReady()
         ipcMain.handle(channel.getDevice, events.getDevice);
         ipcMain.handle(channel.getSaveData, events.getSaveData);
         ipcMain.handle(channel.checkGameFolder, events.checkGameFolder);
+        // settings events
         ipcMain.handle(channel.getSettings, events.requestSettings);
-        ipcMain.handle(channel.setSettings, events.setSettings);
-        ipcMain.handle(channel.selectGoogleDrive, events.selectGoogleDrive);
+        ipcMain.on(channel.setSettings, events.setSettings);
+        // cloud events
+        ipcMain.handle(channel.saveCloudService, events.saveCloudService);
         ipcMain.handle(channel.getCredentialsData, events.getCredentials);
 
         createWindow();
